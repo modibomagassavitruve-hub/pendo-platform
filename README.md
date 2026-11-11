@@ -59,6 +59,10 @@ Détails : [`frontend/README.md`](frontend/README.md) et [`backend/README.md`](b
 Bêta publique, en cours d'audit avant lancement (fraîcheur des données, traductions,
 tests fonctionnels).
 
+## Licence
+
+© Modibo Magassa — tous droits réservés. Code visible à titre de consultation uniquement, voir [`LICENSE`](LICENSE).
+
 ---
 
 Conçu et développé par **Modibo Magassa** —
