@@ -1,0 +1,71 @@
+name: PENDO Auto-Collect
+
+on:
+  schedule:
+    # Collecte news toutes les 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Task to run'
+        required: false
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - news
+          - opportunities
+
+jobs:
+  collect-news:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'schedule' || github.event.inputs.task == 'all' || github.event.inputs.task == 'news'
+    steps:
+      - name: Collect African Financial News
+        run: |
+          echo "🌍 Collecting African financial news..."
+          response=$(curl -s -w "\n%{http_code}" \
+            "https://pendo-backend.vercel.app/api/cron/collect-news")
+
+          http_code=$(echo "$response" | tail -1)
+          body=$(echo "$response" | head -n -1)
+
+          echo "Status: $http_code"
+          echo "Response: $body"
+
+          if [ "$http_code" = "200" ]; then
+            echo "✅ News collection successful"
+          elif [ "$http_code" = "429" ]; then
+            echo "⏳ Rate limited - another collection ran recently"
+          else
+            echo "⚠️ News collection returned $http_code"
+          fi
+
+  collect-opportunities:
+    runs-on: ubuntu-latest
+    if: github.event.inputs.task == 'all' || github.event.inputs.task == 'opportunities'
+    steps:
+      - name: Generate New Opportunities
+        run: |
+          # Seulement à 6h UTC (schedule) ou manuellement
+          HOUR=$(date -u +%H)
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$HOUR" != "06" ]; then
+            echo "⏭️ Skipping opportunities - not 6 AM UTC (current: ${HOUR}h)"
+            exit 0
+          fi
+
+          echo "💼 Generating new investment opportunities..."
+          response=$(curl -s -w "\n%{http_code}" \
+            "https://pendo-backend.vercel.app/api/cron/collect-opportunities")
+
+          http_code=$(echo "$response" | tail -1)
+          body=$(echo "$response" | head -n -1)
+
+          echo "Status: $http_code"
+          echo "Response: $body"
+
+          if [ "$http_code" = "200" ]; then
+            echo "✅ Opportunities generation successful"
+          else
+            echo "⚠️ Opportunities generation returned $http_code"
+          fi

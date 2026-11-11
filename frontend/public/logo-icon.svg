@@ -1,0 +1,20 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Icône seule PENDO avec motif P stylisé - Couleurs modernes -->
+
+  <!-- Barre verticale du P -->
+  <path d="M18 8 L18 52" stroke="#1E3A8A" stroke-width="5" stroke-linecap="round"/>
+
+  <!-- Boucle supérieure du P -->
+  <path d="M18 8 L35 8 Q50 8 50 23 Q50 38 35 38 L18 38" stroke="#1E3A8A" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Motif de lignes horizontales (effet checklist/tasks) dans la boucle -->
+  <line x1="22" y1="15" x2="38" y2="15" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="22" y1="21" x2="42" y2="21" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="22" y1="27" x2="40" y2="27" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="22" y1="33" x2="34" y2="33" stroke="#10B981" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Lignes ondulées en bas de la barre verticale -->
+  <path d="M12 43 Q16 41 20 43 Q24 45 28 43 Q32 41 36 43" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
+  <path d="M12 47 Q16 45 20 47 Q24 49 28 47 Q32 45 36 47" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
+  <path d="M12 51 Q16 49 20 51 Q24 53 28 51 Q32 49 36 51" stroke="#3B82F6" stroke-width="2.5" fill="none"/>
+</svg>

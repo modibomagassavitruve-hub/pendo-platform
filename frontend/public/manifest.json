@@ -1,0 +1,33 @@
+{
+  "short_name": "PENDO",
+  "name": "PENDO - Marchés Financiers Africains",
+  "description": "La première plateforme africaine dédiée aux marchés financiers du continent. Suivez les indices, actions, devises et matières premières en temps réel.",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#0A0F1C",
+  "background_color": "#0A0F1C",
+  "scope": "/",
+  "lang": "fr",
+  "categories": ["finance", "business", "news"],
+  "prefer_related_applications": false
+}

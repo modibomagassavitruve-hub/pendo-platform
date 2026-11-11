@@ -1,0 +1,13 @@
+node_modules
+npm-debug.log
+.env
+.git
+.gitignore
+README.md
+.DS_Store
+*.log
+coverage
+.nyc_output
+backups/*.gz
+data/*.db-shm
+data/*.db-wal

@@ -1,0 +1,9 @@
+data/
+.github/
+test-*.js
+fix-*.js
+clean-*.js
+ecosystem.config.js
+jest.config.js
+scripts/
+deploy.sh

@@ -1,0 +1,35 @@
+name: PENDO Market Data Collector
+
+on:
+  schedule:
+    # Every 15 minutes during African market hours (7h-17h UTC, Mon-Fri)
+    - cron: '*/15 7-17 * * 1-5'
+    # Once at night for closing values
+    - cron: '0 20 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manual run'
+        required: false
+        default: 'manual'
+
+jobs:
+  collect-markets:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci --production
+
+      - name: Collect market data
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: node scripts/collect-markets.js

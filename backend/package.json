@@ -1,0 +1,69 @@
+{
+  "name": "pendo-backend",
+  "version": "1.0.0",
+  "description": "PENDO - API Backend pour les marchés financiers africains",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server-complete.js",
+    "start-full": "node server.js",
+    "dev": "nodemon server.js",
+    "scrape": "node services/brvmScraper.js",
+    "init-db": "node scripts/initDatabase.js",
+    "seed-data": "node scripts/seedCompleteAfricaData.js",
+    "verify": "node scripts/verifyDataIntegrity.js",
+    "reset-data": "node scripts/seedCompleteAfricaData.js && node scripts/verifyDataIntegrity.js",
+    "fix-sqlite": "npm rebuild better-sqlite3",
+    "migrate": "node scripts/migrateToPostgres.js",
+    "test": "jest --forceExit --detectOpenHandles",
+    "test:watch": "jest --watch --forceExit",
+    "lint": "eslint . --ext .js --ignore-pattern node_modules/",
+    "lint:fix": "eslint . --ext .js --ignore-pattern node_modules/ --fix",
+    "format": "prettier --write \"**/*.js\" --ignore-path .gitignore",
+    "postinstall": "echo 'Build completed successfully'"
+  },
+  "keywords": [
+    "finance",
+    "africa",
+    "brvm",
+    "stock-market",
+    "trading"
+  ],
+  "author": "PENDO",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.13.2",
+    "bcryptjs": "^3.0.3",
+    "cheerio": "^1.1.2",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^4.18.2",
+    "express-rate-limit": "^8.2.1",
+    "helmet": "^7.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mathjs": "^15.1.0",
+    "ml-regression": "^6.3.0",
+    "multer": "^2.0.2",
+    "node-cron": "^3.0.3",
+    "node-fetch": "^2.7.0",
+    "node-html-parser": "^7.0.1",
+    "pg": "^8.16.3",
+    "regression": "^2.0.1",
+    "rss-parser": "^3.13.0",
+    "simple-statistics": "^7.8.8",
+    "socket.io": "^4.8.3",
+    "technicalindicators": "^3.1.0",
+    "yahoo-finance2": "^3.11.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-prettier": "^9.1.2",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.3",
+    "prettier": "^3.8.1",
+    "supertest": "^6.3.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "version": 2,
+  "functions": {
+    "api/index.js": {
+      "maxDuration": 60,
+      "includeFiles": "../server-complete.js,../services/**,../utils/**,../middleware/**,../config/**,../package.json,../node_modules/**"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron/collect-markets",
+      "schedule": "0 8 * * 1-5"
+    },
+    {
+      "path": "/api/cron/collect-all?limit=5",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/translate-content?limit=5",
+      "schedule": "0 7 * * *"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "github": {
+    "silent": false,
+    "autoAlias": true
+  }
+}

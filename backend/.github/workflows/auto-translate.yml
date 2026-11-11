@@ -1,0 +1,49 @@
+name: Auto-Translate Content (29 Languages) — FREE
+
+on:
+  schedule:
+    # Fallback: run every 2 hours at :50 in case workflow_run doesn't trigger
+    - cron: '50 */2 * * *'
+  # Auto-trigger after collection workflows complete
+  workflow_run:
+    workflows:
+      - "Collect & Enrich African Financial News"
+      - "Collect African Investment Opportunities"
+      - "PENDO Auto-Collect"
+    types:
+      - completed
+  workflow_dispatch:
+    inputs:
+      max_items:
+        description: 'Max items to translate per table'
+        required: false
+        default: '200'
+        type: string
+
+concurrency:
+  group: auto-translate
+  cancel-in-progress: false
+
+jobs:
+  translate:
+    name: Translate untranslated content (FREE)
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install free translation library
+        run: npm install google-translate-api-x
+
+      - name: Run auto-translate
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          TRANSLATE_MAX_ITEMS: ${{ github.event.inputs.max_items || '200' }}
+        run: node scripts/auto-translate.js

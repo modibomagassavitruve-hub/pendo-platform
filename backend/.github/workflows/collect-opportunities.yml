@@ -1,0 +1,24 @@
+name: Collect African Investment Opportunities
+
+on:
+  schedule:
+    - cron: '15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger opportunity collection
+        run: |
+          echo "Collecting new African investment opportunities..."
+          response=$(curl -s -w "\n%{http_code}" "https://pendo-backend.vercel.app/api/cron/collect-opportunities")
+          http_code=$(echo "$response" | tail -1)
+          body=$(echo "$response" | head -1)
+          echo "HTTP Status: $http_code"
+          echo "Response: $body"
+          if [ "$http_code" -ne 200 ]; then
+            echo "Collection failed with status $http_code"
+            exit 1
+          fi
+          echo "Collection completed successfully"

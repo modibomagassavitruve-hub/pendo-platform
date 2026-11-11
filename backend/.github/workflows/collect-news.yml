@@ -1,0 +1,62 @@
+name: Collect & Enrich African Financial News
+
+on:
+  schedule:
+    # Collecte toutes les heures à :30 (décalé de :15 pour les opportunités)
+    - cron: '30 * * * *'
+    # Enrichissement toutes les heures à :45
+    - cron: '45 * * * *'
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Action to run'
+        required: false
+        default: 'both'
+        type: choice
+        options:
+          - both
+          - collect
+          - enrich
+
+jobs:
+  collect:
+    name: Collect news from RSS feeds
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'workflow_dispatch' && (github.event.inputs.action == 'collect' || github.event.inputs.action == 'both') ||
+      github.event_name == 'schedule' && contains(github.event.schedule, '30')
+    steps:
+      - name: Trigger news collection
+        run: |
+          echo "📰 Collecting African financial news..."
+          response=$(curl -s -w "\n%{http_code}" "https://pendo-backend.vercel.app/api/cron/collect-news")
+          http_code=$(echo "$response" | tail -1)
+          body=$(echo "$response" | head -1)
+          echo "HTTP Status: $http_code"
+          echo "Response: $body"
+          if [ "$http_code" -ne 200 ]; then
+            echo "Collection failed with status $http_code"
+            exit 1
+          fi
+          echo "✅ News collection completed"
+
+  enrich:
+    name: Enrich articles with full content
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'workflow_dispatch' && (github.event.inputs.action == 'enrich' || github.event.inputs.action == 'both') ||
+      github.event_name == 'schedule' && contains(github.event.schedule, '45')
+    steps:
+      - name: Trigger news enrichment
+        run: |
+          echo "🔍 Enriching news articles with full content..."
+          response=$(curl -s -w "\n%{http_code}" "https://pendo-backend.vercel.app/api/cron/enrich-news?limit=12")
+          http_code=$(echo "$response" | tail -1)
+          body=$(echo "$response" | head -1)
+          echo "HTTP Status: $http_code"
+          echo "Response: $body"
+          if [ "$http_code" -ne 200 ]; then
+            echo "Enrichment failed with status $http_code"
+            exit 1
+          fi
+          echo "✅ News enrichment completed"
