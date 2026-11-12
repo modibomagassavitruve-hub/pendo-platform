@@ -1,7 +1,7 @@
 # PENDO — Backend API
 
 API Node.js / Express de **PENDO**, la plateforme dédiée aux marchés financiers africains.
-Elle collecte, stocke et sert les données de **21 bourses africaines**, l'actualité
+Elle collecte, stocke et sert les données de **17 bourses africaines**, l'actualité
 économique et les opportunités d'investissement du continent.
 
 Front : [`pendo-frontend`](https://github.com/modibomagassavitruve-hub/pendo-frontend) ·

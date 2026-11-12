@@ -5,7 +5,7 @@
 **Démo en ligne : https://pendo-frontend.vercel.app**
 
 PENDO réunit en un seul endroit les cours, l'actualité économique et les opportunités
-d'investissement de **21 bourses africaines** (JSE, NGX, EGX, BRVM, NSE Kenya, Casablanca,
+d'investissement de **17 bourses africaines** (JSE, NGX, EGX, BRVM, NSE Kenya, Casablanca,
 GSE…), avec une ambition à la Bloomberg pour l'Afrique.
 
 ## Fonctionnalités

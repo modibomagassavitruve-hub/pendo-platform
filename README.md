@@ -7,7 +7,7 @@
 ![Tableau de bord PENDO](docs/dashboard.jpg)
 
 PENDO réunit les cours, l'actualité économique et les opportunités d'investissement de
-**21 bourses africaines** (JSE, NGX, EGX, BRVM, NSE Kenya, Casablanca, GSE…), avec l'ambition
+**17 bourses africaines** (JSE, NGX, EGX, BRVM, NSE Kenya, Casablanca, GSE…), avec l'ambition
 d'être un « Bloomberg » pour l'Afrique.
 
 ## Fonctionnalités
