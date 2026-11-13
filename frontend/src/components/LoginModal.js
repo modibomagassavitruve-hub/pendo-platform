@@ -34,7 +34,7 @@ const labelStyle = {
   marginBottom: '0.4rem',
 };
 
-const LoginModal = ({ isOpen, onClose }) => {
+const LoginModal = ({ isOpen, onClose, onForgotPassword }) => {
   const { login, register, error, clearError } = useAuth();
   const { t } = useTranslation();
   const [isLogin, setIsLogin] = useState(true);
@@ -90,7 +90,8 @@ const LoginModal = ({ isOpen, onClose }) => {
         const result = await register({ email, password, first_name: firstName, last_name: lastName, phone, country });
         if (result.success) {
           setSuccess(true);
-          setTimeout(() => { setIsLogin(true); resetForm(); setSuccess(false); }, 2000);
+          // Compte créé et connecté : on ferme la fenêtre
+          setTimeout(() => { onClose(); resetForm(); }, 1500);
         }
       }
     } catch (err) {
@@ -124,7 +125,7 @@ const LoginModal = ({ isOpen, onClose }) => {
     <div
       onClick={handleClose}
       style={{
-        position: 'fixed', inset: 0, zIndex: 50,
+        position: 'fixed', inset: 0, zIndex: 1000,
         display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem',
         background: animateIn ? 'rgba(26,20,16,0.6)' : 'transparent',
         transition: 'background 0.3s',
@@ -141,6 +142,7 @@ const LoginModal = ({ isOpen, onClose }) => {
         onClick={e => e.stopPropagation()}
         style={{
           position: 'relative', width: '100%', maxWidth: '440px',
+          maxHeight: 'calc(100dvh - 2rem)', overflowY: 'auto', borderRadius: '24px',
           transform: animateIn ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(16px)',
           opacity: animateIn ? 1 : 0,
           transition: 'all 0.3s',
@@ -261,6 +263,15 @@ const LoginModal = ({ isOpen, onClose }) => {
                       {showPassword ? <EyeOff style={{ width: '18px', height: '18px' }} /> : <Eye style={{ width: '18px', height: '18px' }} />}
                     </button>
                   </div>
+
+                  {isLogin && onForgotPassword && (
+                    <div style={{ textAlign: 'right', marginTop: '0.5rem' }}>
+                      <button type="button" onClick={onForgotPassword}
+                        style={{ background: 'none', border: 'none', color: 'var(--terracotta)', fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '0.8rem', cursor: 'pointer', padding: 0 }}>
+                        {t('auth.forgotPassword', 'Mot de passe oublié ?')}
+                      </button>
+                    </div>
+                  )}
 
                   {!isLogin && password && (
                     <div style={{ marginTop: '0.5rem' }}>

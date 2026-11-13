@@ -155,7 +155,7 @@ const TransactionModal = ({ isOpen, onClose, onSuccess }) => {
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, zIndex: 50,
+      position: 'fixed', inset: 0, zIndex: 1000,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       padding: '0.5rem',
       background: 'rgba(26,20,16,0.55)',

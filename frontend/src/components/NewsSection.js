@@ -587,7 +587,7 @@ const ArticleModal = ({ article, onClose, getCategoryLabel, getCategoryStyle, ge
               transition: 'all 0.2s',
               flexShrink: 0,
             }}
-            aria-label="Fermer"
+            aria-label={t('common.close')}
           >
             <X style={{ width: '1rem', height: '1rem' }} />
           </button>

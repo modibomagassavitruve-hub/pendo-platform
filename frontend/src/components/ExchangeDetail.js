@@ -141,7 +141,7 @@ const ExchangeDetail = ({ exchangeId, onClose, marketData }) => {
               }}
               onMouseEnter={e => { e.currentTarget.style.background = 'var(--ink)'; e.currentTarget.style.color = 'var(--cream)'; }}
               onMouseLeave={e => { e.currentTarget.style.background = 'var(--cream-deep)'; e.currentTarget.style.color = 'var(--ink-soft)'; }}
-              aria-label="Fermer"
+              aria-label={t('common.close')}
             >
               <X style={{ width: '1rem', height: '1rem' }} />
             </button>

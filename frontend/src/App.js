@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import { useMarkets } from './hooks/useMarkets';
 import LoginModal from './components/LoginModal';
+import PasswordModal from './components/PasswordModal';
 import UserMenu from './components/UserMenu';
 import MemberGuard from './components/MemberGuard';
 import ErrorBoundary from './components/ErrorBoundary';
@@ -115,6 +116,15 @@ function AppContent() {
   const [marketOpen, setMarketOpen] = useState(true);
   const [showClosedPage, setShowClosedPage] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
+  // Lien de réinitialisation reçu par e-mail : /?reset_token=...
+  const [resetToken] = useState(() => {
+    try { return new URLSearchParams(window.location.search).get('reset_token'); } catch (e) { return null; }
+  });
+  const [passwordMode, setPasswordMode] = useState(() => (resetToken ? 'reset' : null));
+  const closePasswordModal = () => {
+    setPasswordMode(null);
+    if (resetToken) window.history.replaceState({}, '', window.location.pathname);
+  };
   const [showFeedbackModal, setShowFeedbackModal] = useState(false);
   const [showSlack, setShowSlack] = useState(false);
 
@@ -201,7 +211,13 @@ function AppContent() {
         <BetaBanner onFeedbackClick={() => setShowFeedbackModal(true)} />
 
         {/* Login Modal */}
-        <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
+        <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} onForgotPassword={() => { setShowLogin(false); setPasswordMode('forgot'); }} />
+        <PasswordModal
+          mode={passwordMode}
+          resetToken={resetToken}
+          onClose={closePasswordModal}
+          onBackToLogin={() => { closePasswordModal(); setShowLogin(true); }}
+        />
 
         {/* Alert Modal */}
         {showAlerts && <AlertModal onClose={() => setShowAlerts(false)} />}
@@ -252,7 +268,7 @@ function AppContent() {
           marketOpen={marketOpen}
           onOpenLogin={() => setShowLogin(true)}
           onOpenSlack={() => setShowSlack(true)}
-          userMenuComponent={<UserMenu onOpenLogin={() => setShowLogin(true)} />}
+          userMenuComponent={<UserMenu onOpenLogin={() => setShowLogin(true)} onChangePassword={() => setPasswordMode('change')} />}
         />
 
       {/* Skip to main content — accessibility */}
@@ -298,9 +314,9 @@ function AppContent() {
 
             {activeTab === "news" && <NewsSection />}
 
-            {activeTab === "portfolio" && <PortfolioTabEnhanced />}
+            {activeTab === "portfolio" && <PortfolioTabEnhanced onOpenLogin={() => setShowLogin(true)} />}
 
-            {activeTab === "analytics" && <AnalyticsTab />}
+            {activeTab === "analytics" && <AnalyticsTab onOpenLogin={() => setShowLogin(true)} />}
 
             {activeTab === "calendar" && <EconomicCalendar />}
 
@@ -308,14 +324,13 @@ function AppContent() {
               <NotificationCenter
                 isOpen={true}
                 onClose={() => setActiveTab('markets')}
-                onOpenLogin={() => setShowLoginModal(true)}
+                onOpenLogin={() => setShowLogin(true)}
               />
             )}
 
             {activeTab === "forum" && (
-              isAuthenticated ? <ForumMain /> : (
-                <MemberGuard onOpenLogin={() => setShowLogin(true)} feature="Forum" />
-              )
+              // Lecture ouverte à tous ; publier, répondre et aimer demandent un compte
+              <ForumMain onOpenLogin={() => setShowLogin(true)} />
             )}
 
             {activeTab === "chat" && (
@@ -339,6 +354,8 @@ function AppContent() {
         <button
           onClick={() => setShowSlack(true)}
           title="Ouvrir la vue Slack"
+          aria-label="Ouvrir la vue Slack"
+          className="pendo-slack-fab"
           style={{
             position: 'fixed', left: '1rem', bottom: '1rem', zIndex: 50,
             display: 'flex', alignItems: 'center', gap: '8px',
@@ -348,7 +365,7 @@ function AppContent() {
             fontFamily: 'var(--font-body)'
           }}
         >
-          <span style={{ fontSize: '16px' }}>◨</span> Vue Slack
+          <span style={{ fontSize: '16px' }}>◨</span> <span className="pendo-fab-label">Vue Slack</span>
         </button>
 
         {/* Modal de Feedback */}

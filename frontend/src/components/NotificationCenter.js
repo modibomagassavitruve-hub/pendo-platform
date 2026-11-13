@@ -127,7 +127,7 @@ const NotificationCenter = ({ isOpen, onClose, onOpenLogin }) => {
 
   return (
     <div
-      style={{ position: 'fixed', inset: 0, background: 'rgba(26,20,16,0.6)', zIndex: 50, display: 'flex', justifyContent: 'flex-end' }}
+      style={{ position: 'fixed', inset: 0, background: 'rgba(26,20,16,0.6)', zIndex: 1000, display: 'flex', justifyContent: 'flex-end' }}
       onClick={onClose}
     >
       <div
@@ -196,10 +196,10 @@ const NotificationCenter = ({ isOpen, onClose, onOpenLogin }) => {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4rem 1rem', textAlign: 'center' }}>
               <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🔔</div>
               <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: 'var(--ink)', fontWeight: 500, marginBottom: '0.5rem' }}>
-                Notifications & Alertes
+                {t('notifications.loginTitle', 'Notifications & Alertes')}
               </p>
               <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', color: 'var(--ink-mute)', maxWidth: '280px', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-                Connectez-vous pour recevoir des notifications sur vos marchés et créer des alertes de prix personnalisées.
+                {t('notifications.loginDesc', 'Connectez-vous pour recevoir des notifications sur vos marchés et créer des alertes de prix personnalisées.')}
               </p>
               <button
                 onClick={() => { onClose(); if (onOpenLogin) onOpenLogin(); }}

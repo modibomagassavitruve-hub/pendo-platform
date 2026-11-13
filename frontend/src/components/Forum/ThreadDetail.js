@@ -6,7 +6,7 @@ import { API_URL } from '../../config';
 import { getLocale } from '../../utils/locale';
 import logger from '../../utils/logger';
 
-const ThreadDetail = ({ thread, onBack }) => {
+const ThreadDetail = ({ thread, onBack, onOpenLogin }) => {
   const { t } = useTranslation();
   const [threadData, setThreadData] = useState(thread);
   const [posts, setPosts] = useState([]);
@@ -47,7 +47,7 @@ const ThreadDetail = ({ thread, onBack }) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('pendo_token');
-      if (!token) { alert(t('forum.loginToReply')); return; }
+      if (!token) { if (onOpenLogin) onOpenLogin(); else alert(t('forum.loginToReply')); return; }
       const response = await axios.post(`${API_URL}/forum/threads/${thread.id}/posts`, { content: newPost }, { headers: { Authorization: `Bearer ${token}` } });
       if (response.data.success) { setNewPost(''); loadPosts(); loadThreadDetails(); }
     } catch (error) {
@@ -59,7 +59,7 @@ const ThreadDetail = ({ thread, onBack }) => {
   const handleLike = async (postId) => {
     try {
       const token = localStorage.getItem('pendo_token');
-      if (!token) { alert(t('forum.loginToLike')); return; }
+      if (!token) { if (onOpenLogin) onOpenLogin(); else alert(t('forum.loginToLike')); return; }
       const response = await axios.post(`${API_URL}/forum/posts/${postId}/like`, {}, { headers: { Authorization: `Bearer ${token}` } });
       if (response.data.success) {
         setUserLikes(prev => response.data.liked ? [...prev, postId] : prev.filter(id => id !== postId));

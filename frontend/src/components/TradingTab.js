@@ -635,7 +635,8 @@ const itemBase = {
 
 const WatchlistIndex = ({ market, selectedMarket, onSelectMarket, favorites, toggleFavorite }) => {
   const tvInfo = TV_SYMBOLS[market.id];
-  const isPositive = market.changePercent >= 0;
+  const hasChange = typeof market.changePercent === 'number';
+  const isPositive = hasChange && market.changePercent >= 0;
   const isFav = favorites.includes(market.id);
   const isSelected = selectedMarket === market.id;
   return (
@@ -656,8 +657,8 @@ const WatchlistIndex = ({ market, selectedMarket, onSelectMarket, favorites, tog
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.68rem', color: 'var(--ink-soft)' }}>
             {typeof market.rawValue === 'number' ? market.rawValue.toLocaleString(undefined, { maximumFractionDigits: 0 }) : market.indexValue}
           </div>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', fontWeight: 700, color: isPositive ? 'var(--forest)' : 'var(--terracotta)' }}>
-            {isPositive ? '+' : ''}{market.changePercent?.toFixed(2)}%
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.62rem', fontWeight: 700, color: !hasChange ? 'var(--ink-mute)' : isPositive ? 'var(--forest)' : 'var(--terracotta)' }}>
+            {hasChange ? `${isPositive ? '+' : ''}${market.changePercent.toFixed(2)}%` : '—'}
           </div>
         </div>
       </button>
@@ -850,7 +851,7 @@ const TradingTab = ({ markets }) => {
   return (
     <div style={{
       display: 'flex',
-      ...(fullscreen ? { position: 'fixed', inset: 0, zIndex: 50 } : { height: 'calc(100vh - 180px)', minHeight: '600px' }),
+      ...(fullscreen ? { position: 'fixed', inset: 0, zIndex: 1000 } : { height: 'calc(100vh - 180px)', minHeight: '600px' }),
       borderRadius: '14px', overflow: 'hidden',
       border: '1.5px solid rgba(26,20,16,0.08)',
       background: 'var(--cream)',
@@ -989,13 +990,13 @@ const TradingTab = ({ markets }) => {
               <div style={{
                 display: 'flex', alignItems: 'center', gap: '0.25rem',
                 padding: '0.25rem 0.6rem', borderRadius: '8px',
-                background: market.changePercent >= 0 ? 'rgba(30,77,58,0.08)' : 'rgba(194,73,22,0.08)',
+                background: typeof market.changePercent !== 'number' ? 'rgba(26,20,16,0.06)' : market.changePercent >= 0 ? 'rgba(30,77,58,0.08)' : 'rgba(194,73,22,0.08)',
               }}>
-                {market.changePercent >= 0
+                {typeof market.changePercent !== 'number' ? null : market.changePercent >= 0
                   ? <TrendingUp style={{ width: '11px', height: '11px', color: 'var(--forest)' }} />
                   : <TrendingDown style={{ width: '11px', height: '11px', color: 'var(--terracotta)' }} />
                 }
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, color: market.changePercent >= 0 ? 'var(--forest)' : 'var(--terracotta)' }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', fontWeight: 700, color: typeof market.changePercent !== 'number' ? 'var(--ink-mute)' : market.changePercent >= 0 ? 'var(--forest)' : 'var(--terracotta)' }}>
                   {market.change}
                 </span>
               </div>

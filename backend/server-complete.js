@@ -209,6 +209,17 @@ const authRateLimit = rateLimit(10, 15 * 60 * 1000); // 10 requêtes / 15 min po
 const apiRateLimit = rateLimit(120, 60 * 1000); // 120 requêtes / min pour API générale
 
 // ── Appliquer rate limit sur toutes les routes /api/ (sauf crons) ──────────
+// Ne jamais mettre en cache CDN une réponse de démonstration (base indisponible) :
+// sinon le site continue d'afficher les données de démo longtemps après le retour de la base.
+app.use((req, res, next) => {
+  const json = res.json.bind(res);
+  res.json = (body) => {
+    if (!pool || res.locals.demoFallback) res.setHeader('Cache-Control', 'no-store');
+    return json(body);
+  };
+  next();
+});
+
 app.use('/api', (req, res, next) => {
   if (req.path.startsWith('/cron/')) return next(); // Crons exemptés
   return apiRateLimit(req, res, next);
@@ -2520,6 +2531,7 @@ app.get('/api/opportunities', cachePublic(1800), async (req, res) => {
   }
 
   // Fallback aux données démo
+  res.locals.demoFallback = true;
   let filtered = [...DEMO_OPPORTUNITIES];
   if (sector) filtered = filtered.filter(o => o.sector === sector);
   if (country) filtered = filtered.filter(o => o.country === country);
@@ -2756,6 +2768,7 @@ app.get('/api/news', cachePublic(600), async (req, res) => {
     } catch (e) {}
   }
 
+  res.locals.demoFallback = true;
   let filtered = [...DEMO_NEWS];
   if (market) filtered = filtered.filter(n => n.market_id === market);
   if (category) filtered = filtered.filter(n => n.category === category);
@@ -3138,18 +3151,22 @@ app.post('/api/analytics/track', (req, res) => {
 // ROUTES - AUTH (REAL IMPLEMENTATION)
 // ============================================================
 
+// L'interface affiche prénom / nom : on les dérive du champ « name »
+function withNameParts(u) {
+  if (!u) return u;
+  const parts = (u.name || '').trim().split(/\s+/).filter(Boolean);
+  return { ...u, first_name: u.first_name || parts[0] || '', last_name: u.last_name || parts.slice(1).join(' ') };
+}
+
 app.post('/api/auth/register', authRateLimit, async (req, res) => {
   try {
-    const { email, password, name } = req.body;
+    const { email, password, first_name, last_name } = req.body;
+    const name = req.body.name || [first_name, last_name].filter(Boolean).join(' ');
     if (!email || !password) return res.status(400).json(formatError('Email et mot de passe requis', 400));
     if (!validateEmail(email)) return res.status(400).json(formatError('Format email invalide', 400));
     if (password.length < 8) return res.status(400).json(formatError('Mot de passe trop court (min 8 caractères)', 400));
     const safeName = sanitizeHtml((name || '').substring(0, 100));
-    if (!pool) {
-      // Demo mode
-      const token = jwt.sign({ id: Date.now(), email, name: safeName }, JWT_SECRET, { expiresIn: '24h' });
-      return res.json(formatResponse({ user: { id: 1, email, name: safeName }, token }));
-    }
+    if (!pool) return res.status(503).json(formatError('Service momentanément indisponible, réessayez dans quelques instants', 503));
     const existing = await pool.query(`SELECT id FROM users WHERE email = $1`, [email.toLowerCase().trim()]);
     if (existing.rows.length > 0) return res.status(409).json(formatError('Email déjà utilisé', 409));
     const passwordHash = await bcrypt.hash(password, 10);
@@ -3161,14 +3178,11 @@ app.post('/api/auth/register', authRateLimit, async (req, res) => {
     await pool.query(`INSERT INTO portfolio_cash (user_id, balance) VALUES ($1, 10000000) ON CONFLICT DO NOTHING`, [user.id]);
     await pool.query(`INSERT INTO notifications (user_id, type, title, message) VALUES ($1, 'system', 'Bienvenue sur PENDO !', 'Votre compte est créé. Bonne exploration des marchés africains 🌍')`, [user.id]);
     const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '24h' });
-    res.json(formatResponse({ user: { id: user.id, email: user.email, name: user.name, preferences: user.preferences }, token }));
+    res.json(formatResponse({ user: withNameParts({ id: user.id, email: user.email, name: user.name, preferences: user.preferences }), token }));
   } catch(e) {
     console.error('Register error:', e.message, 'code:', e.code);
     if (isDbUnavailable(e)) {
-      // DB unavailable (tables missing, Neon suspended, etc.) — return demo token
-      const safeName2 = (req.body.name || '').substring(0, 100);
-      const token = jwt.sign({ id: Date.now(), email: req.body.email, name: safeName2 }, JWT_SECRET, { expiresIn: '24h' });
-      return res.json(formatResponse({ user: { id: 1, email: req.body.email, name: safeName2 }, token, demo: true }));
+      return res.status(503).json(formatError('Service momentanément indisponible, réessayez dans quelques instants', 503));
     }
     res.status(500).json(formatError('Erreur interne', 500));
   }
@@ -3178,10 +3192,7 @@ app.post('/api/auth/login', authRateLimit, async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).json(formatError('Email et mot de passe requis', 400));
-    if (!pool) {
-      const token = jwt.sign({ id: 1, email, name: 'Demo User' }, JWT_SECRET, { expiresIn: '24h' });
-      return res.json(formatResponse({ user: { id: 1, email, name: 'Demo User' }, token }));
-    }
+    if (!pool) return res.status(503).json(formatError('Service momentanément indisponible, réessayez dans quelques instants', 503));
     const r = await pool.query(`SELECT * FROM users WHERE email = $1`, [email.toLowerCase().trim()]);
     if (!r.rows.length) return res.status(401).json(formatError('Email ou mot de passe incorrect', 401));
     const user = r.rows[0];
@@ -3189,13 +3200,11 @@ app.post('/api/auth/login', authRateLimit, async (req, res) => {
     if (!valid) return res.status(401).json(formatError('Email ou mot de passe incorrect', 401));
     await pool.query(`UPDATE users SET updated_at = NOW() WHERE id = $1`, [user.id]);
     const token = jwt.sign({ id: user.id, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '24h' });
-    res.json(formatResponse({ user: { id: user.id, email: user.email, name: user.name, avatar: user.avatar, preferences: user.preferences }, token }));
+    res.json(formatResponse({ user: withNameParts({ id: user.id, email: user.email, name: user.name, avatar: user.avatar, preferences: user.preferences }), token }));
   } catch(e) {
     console.error('Login error:', e.message, 'code:', e.code);
     if (isDbUnavailable(e)) {
-      // DB unavailable (Neon suspended, tables missing, etc.) — return demo token
-      const token = jwt.sign({ id: 1, email: req.body.email, name: 'Demo User' }, JWT_SECRET, { expiresIn: '24h' });
-      return res.json(formatResponse({ user: { id: 1, email: req.body.email, name: 'Demo User' }, token, demo: true }));
+      return res.status(503).json(formatError('Service momentanément indisponible, réessayez dans quelques instants', 503));
     }
     res.status(500).json(formatError('Erreur interne', 500));
   }
@@ -3207,10 +3216,10 @@ app.post('/api/auth/logout', (req, res) => {
 
 app.get('/api/auth/me', authenticateToken, async (req, res) => {
   try {
-    if (!pool) return res.json(formatResponse({ id: req.user.id, email: req.user.email, name: req.user.name, preferences: { language: 'fr', currency: 'XOF', notifications: true } }));
+    if (!pool) return res.json(formatResponse(withNameParts({ id: req.user.id, email: req.user.email, name: req.user.name, preferences: { language: 'fr', currency: 'XOF', notifications: true } })));
     const r = await pool.query(`SELECT id, email, name, avatar, bio, preferences, created_at FROM users WHERE id = $1`, [req.user.id]);
     if (!r.rows.length) return res.status(404).json(formatError('Utilisateur non trouvé', 404));
-    res.json(formatResponse(r.rows[0]));
+    res.json(formatResponse(withNameParts(r.rows[0])));
   } catch(e) { res.status(500).json(formatError('Erreur interne', 500)); }
 });
 
@@ -3244,6 +3253,75 @@ app.put('/api/auth/password', authenticateToken, async (req, res) => {
     await pool.query(`UPDATE users SET password_hash = $1, updated_at = NOW() WHERE id = $2`, [hash, req.user.id]);
     res.json(formatResponse({ message: 'Mot de passe mis à jour' }));
   } catch(e) { res.status(500).json(formatError('Erreur interne', 500)); }
+});
+
+// ── Mot de passe oublié ──────────────────────────────────────────────
+// Le jeton n'est jamais stocké en clair : seul son SHA-256 est en base.
+const FRONTEND_URL = (process.env.FRONTEND_URL || 'https://pendo-frontend.vercel.app').replace(/\/$/, '');
+const hashResetToken = (tok) => crypto.createHash('sha256').update(tok).digest('hex');
+
+async function sendResetEmail(to, link) {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) { console.warn('[reset] RESEND_API_KEY absent : e-mail non envoyé'); return false; }
+  const from = process.env.MAIL_FROM || 'PENDO <onboarding@resend.dev>';
+  const html = `<div style="font-family:Arial,sans-serif;max-width:520px;margin:auto;color:#1a1410">
+    <h2 style="margin-bottom:8px">Réinitialisation de votre mot de passe PENDO</h2>
+    <p>Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous (valable 1 heure) :</p>
+    <p style="margin:28px 0"><a href="${link}" style="background:#1a1410;color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none">Choisir un nouveau mot de passe</a></p>
+    <p style="font-size:13px;color:#6b5f55">Si vous n'êtes pas à l'origine de cette demande, ignorez cet e-mail : votre mot de passe reste inchangé.</p></div>`;
+  try {
+    const r = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ from, to: [to], subject: 'Réinitialisation de votre mot de passe PENDO', html })
+    });
+    if (!r.ok) console.error('[reset] Resend', r.status, (await r.text()).slice(0, 200));
+    return r.ok;
+  } catch (e) { console.error('[reset] envoi e-mail:', e.message); return false; }
+}
+
+app.post('/api/auth/forgot-password', authRateLimit, async (req, res) => {
+  // Réponse identique que le compte existe ou non (pas d'énumération d'e-mails)
+  const generic = formatResponse({ message: 'Si un compte existe pour cet e-mail, un lien de réinitialisation vient d\'être envoyé.' });
+  try {
+    const email = (req.body.email || '').toLowerCase().trim();
+    if (!validateEmail(email)) return res.status(400).json(formatError('Format email invalide', 400));
+    if (!pool) return res.status(503).json(formatError('Service momentanément indisponible, réessayez dans quelques instants', 503));
+    const u = await pool.query(`SELECT id, email FROM users WHERE email = $1`, [email]);
+    if (!u.rows.length) return res.json(generic);
+    const userId = u.rows[0].id;
+    const recent = await pool.query(`SELECT count(*)::int AS n FROM password_resets WHERE user_id = $1 AND created_at > NOW() - INTERVAL '1 hour'`, [userId]);
+    if (recent.rows[0].n >= 3) return res.json(generic);
+    const tok = crypto.randomBytes(32).toString('hex');
+    await pool.query(`INSERT INTO password_resets (user_id, token_hash, expires_at) VALUES ($1, $2, NOW() + INTERVAL '1 hour')`, [userId, hashResetToken(tok)]);
+    await sendResetEmail(u.rows[0].email, `${FRONTEND_URL}/?reset_token=${tok}`);
+    res.json(generic);
+  } catch (e) {
+    console.error('Forgot password error:', e.message);
+    res.status(500).json(formatError('Erreur interne', 500));
+  }
+});
+
+app.post('/api/auth/reset-password', authRateLimit, async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    if (!token || typeof token !== 'string') return res.status(400).json(formatError('Lien invalide', 400));
+    if (!newPassword || newPassword.length < 8) return res.status(400).json(formatError('Mot de passe trop court (min 8 caractères)', 400));
+    if (!pool) return res.status(503).json(formatError('Service momentanément indisponible, réessayez dans quelques instants', 503));
+    const r = await pool.query(
+      `UPDATE password_resets SET used_at = NOW() WHERE token_hash = $1 AND used_at IS NULL AND expires_at > NOW() RETURNING user_id`,
+      [hashResetToken(token)]
+    );
+    if (!r.rows.length) return res.status(400).json(formatError('Lien invalide ou expiré. Refaites une demande.', 400));
+    const userId = r.rows[0].user_id;
+    const hash = await bcrypt.hash(newPassword, 10);
+    await pool.query(`UPDATE users SET password_hash = $1, updated_at = NOW() WHERE id = $2`, [hash, userId]);
+    await pool.query(`UPDATE password_resets SET used_at = NOW() WHERE user_id = $1 AND used_at IS NULL`, [userId]);
+    res.json(formatResponse({ message: 'Mot de passe réinitialisé. Vous pouvez vous connecter.' }));
+  } catch (e) {
+    console.error('Reset password error:', e.message);
+    res.status(500).json(formatError('Erreur interne', 500));
+  }
 });
 
 app.put('/api/auth/preferences', authenticateToken, async (req, res) => {
@@ -3487,6 +3565,12 @@ app.get('/api/chat/unread', optionalAuth, async (req, res) => {
   res.json(formatResponse({ count: 0 }));
 });
 
+// Marquer une conversation comme lue (appelé par ChatWindow). Le chat public n'a pas
+// de compteur de non-lus par utilisateur : on répond simplement OK.
+app.post('/api/chat/conversations/:id/read', optionalAuth, async (req, res) => {
+  res.json(formatResponse({ conversationId: req.params.id, read: true }));
+});
+
 // ============================================================
 // ROUTES - NOTIFICATIONS (REAL DATABASE)
 // ============================================================
@@ -3609,6 +3693,47 @@ app.get('/api/stats', (req, res) => {
 // ── Cron: Collect Market Data ─────────────────────────────────────────
 // Fetches ALL 16 markets automatically (no local machine needed):
 //   AFX Kwayisi via allorigins.win proxy (10), Investing.com (4), DSE Official (1), RSE Official (1)
+// Réception des cours envoyés par le collecteur externe (dépôt public pendo-market-collector,
+// exécuté sur GitHub Actions dont les IP ne sont pas bloquées par les sources).
+// Le collecteur n'a aucun accès à la base : il envoie les valeurs, le backend valide et enregistre.
+const INGEST_MARKET_IDS = new Set(['jse','masi','nse_ng','egx','nse_ke','brvm','gse','bse','luse','zse','sem','dse','use','rse','bvmt','nsx','mse']);
+app.post('/api/cron/ingest-markets', verifyCronSecret, async (req, res) => {
+  try {
+    if (!pool) return res.status(503).json(formatError('Database not ready', 503));
+    const items = Array.isArray(req.body?.markets) ? req.body.markets.slice(0, 50) : [];
+    const saved = [], rejected = [];
+    for (const m of items) {
+      const id = String(m?.id || '').toLowerCase();
+      const value = Number(m?.value);
+      let change = (m?.change === null || m?.change === undefined) ? null : Number(m.change);
+      const source = String(m?.source || 'collector').slice(0, 50);
+      // Source sans variation (ex. SEMDEX) : calculée depuis la dernière valeur d'un jour précédent
+      if (change === null && INGEST_MARKET_IDS.has(id) && isFinite(value) && value > 0) {
+        const prev = await pool.query(
+          "SELECT value FROM market_snapshots WHERE market_id = $1 AND fetched_at < date_trunc('day', NOW()) ORDER BY fetched_at DESC LIMIT 1",
+          [id]
+        );
+        const pv = prev.rows[0] ? Number(prev.rows[0].value) : null;
+        change = pv ? ((value - pv) / pv) * 100 : null;
+      }
+      if (!INGEST_MARKET_IDS.has(id) || !isFinite(value) || value <= 0 || (change !== null && (!isFinite(change) || Math.abs(change) > 25))) {
+        rejected.push({ id, value, change });
+        continue;
+      }
+      await pool.query(
+        'INSERT INTO market_snapshots (market_id, value, change_percent, source) VALUES ($1, $2, $3, $4)',
+        [id, value, change === null ? null : parseFloat(change.toFixed(2)), source]
+      );
+      saved.push(id);
+    }
+    await pool.query("DELETE FROM market_snapshots WHERE fetched_at < NOW() - INTERVAL '60 days'");
+    res.json(formatResponse({ saved: saved.length, ids: saved, rejected }));
+  } catch (e) {
+    console.error('ingest-markets error:', e.message);
+    res.status(500).json(formatError('Erreur interne', 500));
+  }
+});
+
 app.get('/api/cron/collect-markets', verifyCronSecret, async (req, res) => {
   try {
     if (!pool) return res.status(503).json(formatError('Database not ready', 503));
@@ -3731,7 +3856,11 @@ app.get('/api/cron/collect-markets', verifyCronSecret, async (req, res) => {
             const dsei = data.data.find(d => d.Code === 'DSEI');
             if (dsei) {
               const value = parseFloat(dsei.ClosingPrice.replace(/,/g, ''));
-              results.push({ id: 'dse', value, change: parseFloat((dsei.Change || 0).toFixed(2)), source: 'DSE Official' });
+              // L'API DSE renvoie la variation en points : conversion en pourcentage
+              const pts = parseFloat(String(dsei.Change || 0).replace(/,/g, '')) || 0;
+              const prev = value - pts;
+              const pct = prev ? (pts / prev) * 100 : 0;
+              results.push({ id: 'dse', value, change: parseFloat(pct.toFixed(2)), source: 'DSE Official' });
               return;
             }
           }

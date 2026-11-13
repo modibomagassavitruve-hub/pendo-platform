@@ -162,7 +162,8 @@ const Header = ({
 
           {/* Actions droite */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-            <div className="hidden md:block">
+            {/* Visible aussi sur mobile (drapeau seul, le nom s'affiche à partir de md) */}
+            <div>
               <LanguageSelector />
             </div>
 
@@ -170,7 +171,6 @@ const Header = ({
             <button
               onClick={() => handleNavClick('forum')}
               style={{
-                display: 'none',
                 alignItems: 'center',
                 gap: '0.4rem',
                 padding: '0.4rem 0.75rem',
@@ -184,7 +184,7 @@ const Header = ({
                 background: activeTab === 'forum' ? 'var(--ink)' : 'transparent',
                 color: activeTab === 'forum' ? 'var(--cream)' : 'var(--ink-soft)',
               }}
-              className="sm:flex"
+              className="hidden sm:flex"
               onMouseEnter={e => {
                 if (activeTab !== 'forum') {
                   e.currentTarget.style.background = 'var(--cream-deep)';
@@ -206,7 +206,6 @@ const Header = ({
             <button
               onClick={() => handleNavClick('chat')}
               style={{
-                display: 'none',
                 alignItems: 'center',
                 gap: '0.4rem',
                 padding: '0.4rem 0.75rem',
@@ -220,7 +219,7 @@ const Header = ({
                 background: activeTab === 'chat' ? 'var(--ink)' : 'transparent',
                 color: activeTab === 'chat' ? 'var(--cream)' : 'var(--ink-soft)',
               }}
-              className="sm:flex"
+              className="hidden sm:flex"
               onMouseEnter={e => {
                 if (activeTab !== 'chat') {
                   e.currentTarget.style.background = 'var(--cream-deep)';
@@ -276,11 +275,12 @@ const Header = ({
             {userMenuComponent || (
               <button
                 onClick={onOpenLogin}
+                aria-label={t('auth.login')}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: '0.5rem',
-                  padding: '0.5rem 1rem',
+                  padding: '0.5rem 0.75rem',
                   background: 'var(--ink)',
                   color: 'var(--cream)',
                   fontWeight: 600,
@@ -304,7 +304,8 @@ const Header = ({
                 }}
               >
                 <User style={{ width: '1rem', height: '1rem' }} />
-                <span>{t('auth.login')}</span>
+                {/* Texte masqué sur mobile pour laisser la place au burger et à la langue */}
+                <span className="hidden sm:inline">{t('auth.login')}</span>
               </button>
             )}
 
@@ -321,7 +322,7 @@ const Header = ({
                 transition: 'all 0.2s',
               }}
               className="md:hidden"
-              aria-label={mobileMenuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
+              aria-label={mobileMenuOpen ? t('header.closeMenu', 'Fermer le menu') : t('header.openMenu', 'Ouvrir le menu')}
             >
               {mobileMenuOpen
                 ? <X style={{ width: '1.25rem', height: '1.25rem' }} />
@@ -354,8 +355,10 @@ const Header = ({
         <div
           className="md:hidden"
           style={{
-            overflow: 'hidden',
-            maxHeight: mobileMenuOpen ? '900px' : '0',
+            // Défilable : l'en-tête est « sticky », un menu plus haut que l'écran était coupé
+            overflowX: 'hidden',
+            overflowY: mobileMenuOpen ? 'auto' : 'hidden',
+            maxHeight: mobileMenuOpen ? 'calc(100vh - 7rem)' : '0',
             opacity: mobileMenuOpen ? 1 : 0,
             transition: 'max-height 0.3s ease, opacity 0.3s ease',
             paddingBottom: mobileMenuOpen ? '1rem' : '0',

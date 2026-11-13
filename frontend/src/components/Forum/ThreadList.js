@@ -19,7 +19,7 @@ const fieldStyle = {
   boxSizing: 'border-box',
 };
 
-const ThreadList = ({ category, onThreadSelect, onBack }) => {
+const ThreadList = ({ category, onThreadSelect, onBack, onOpenLogin }) => {
   const { t } = useTranslation();
   const [threads, setThreads] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,7 +46,7 @@ const ThreadList = ({ category, onThreadSelect, onBack }) => {
     e.preventDefault();
     try {
       const token = localStorage.getItem('pendo_token');
-      if (!token) { alert(t('forum.loginRequired')); return; }
+      if (!token) { if (onOpenLogin) onOpenLogin(); else alert(t('forum.loginRequired')); return; }
       const response = await axios.post(
         `${API_URL}/forum/threads`,
         { category_id: category.id, title: newThread.title, content: newThread.content },
@@ -87,7 +87,7 @@ const ThreadList = ({ category, onThreadSelect, onBack }) => {
         </button>
 
         <button
-          onClick={() => setShowNewThread(!showNewThread)}
+          onClick={() => { if (!localStorage.getItem('pendo_token') && onOpenLogin) { onOpenLogin(); return; } setShowNewThread(!showNewThread); }}
           style={{
             display: 'flex', alignItems: 'center', gap: '0.5rem',
             padding: '0.6rem 1.25rem',

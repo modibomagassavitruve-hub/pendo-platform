@@ -60,7 +60,7 @@ const AlertModal = ({ onClose }) => {
       position: 'fixed', inset: 0,
       background: 'rgba(26,20,16,0.55)',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
-      zIndex: 50, padding: '1rem',
+      zIndex: 1000, padding: '1rem',
     }}>
       <div style={{
         background: 'var(--cream-glow)',

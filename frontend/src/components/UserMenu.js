@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
-import { User, LogOut, Settings, Activity, ChevronDown } from 'lucide-react';
+import { User, LogOut, Settings, Activity, ChevronDown, KeyRound } from 'lucide-react';
 
-const UserMenu = ({ onOpenLogin }) => {
+const UserMenu = ({ onOpenLogin, onChangePassword }) => {
   const { user, logout, isAuthenticated } = useAuth();
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
@@ -12,8 +12,9 @@ const UserMenu = ({ onOpenLogin }) => {
     return (
       <button
         onClick={onOpenLogin}
+        aria-label={t('auth.login')}
         style={{
-          padding: '0.5rem 1.25rem',
+          padding: '0.5rem 0.9rem',
           background: 'var(--terracotta)',
           color: 'var(--cream)',
           border: 'none',
@@ -31,7 +32,8 @@ const UserMenu = ({ onOpenLogin }) => {
         onMouseLeave={e => { e.currentTarget.style.background = 'var(--terracotta)'; }}
       >
         <User style={{ width: '18px', height: '18px' }} />
-        <span>{t('auth.login')}</span>
+        {/* Texte masqué sur mobile pour garder le burger et la langue visibles */}
+        <span className="hidden sm:inline">{t('auth.login')}</span>
       </button>
     );
   }
@@ -117,9 +119,11 @@ const UserMenu = ({ onOpenLogin }) => {
                 { Icon: User, label: t('user.profile') },
                 { Icon: Activity, label: t('user.activity') },
                 { Icon: Settings, label: t('user.settings') },
-              ].map(({ Icon, label }) => (
+                { Icon: KeyRound, label: t('auth.changePasswordTitle', 'Changer le mot de passe'), onClick: onChangePassword },
+              ].map(({ Icon, label, onClick }) => (
                 <button
                   key={label}
+                  onClick={onClick ? () => { setIsOpen(false); onClick(); } : undefined}
                   style={{
                     width: '100%', padding: '0.65rem 1rem', textAlign: 'left',
                     background: 'none', border: 'none', cursor: 'pointer',

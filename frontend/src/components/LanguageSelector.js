@@ -9,6 +9,16 @@ const LanguageSelector = ({ inline = false }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const dropdownRef = useRef(null);
   const searchInputRef = useRef(null);
+  const [dropdownShift, setDropdownShift] = useState(0);
+
+  // Sur petit écran, le menu (300px) déborderait à gauche : on le décale pour qu'il reste visible
+  useEffect(() => {
+    if (!isOpen || inline || !dropdownRef.current) return;
+    const rect = dropdownRef.current.getBoundingClientRect();
+    const width = Math.min(300, window.innerWidth - 32);
+    const overflowLeft = 16 - (rect.right - width);
+    setDropdownShift(overflowLeft > 0 ? overflowLeft : 0);
+  }, [isOpen, inline]);
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
@@ -242,7 +252,7 @@ const LanguageSelector = ({ inline = false }) => {
           display: 'flex',
           alignItems: 'center',
           gap: '0.5rem',
-          padding: '0.45rem 0.85rem',
+          padding: '0.45rem 0.6rem',
           borderRadius: '99px',
           border: '1.5px solid rgba(26,20,16,0.15)',
           background: isOpen ? 'var(--cream-deep)' : 'transparent',
@@ -252,7 +262,7 @@ const LanguageSelector = ({ inline = false }) => {
           fontFamily: 'var(--font-body)',
           fontSize: '0.875rem',
         }}
-        aria-label="Sélectionner la langue"
+        aria-label={t('languageSelector.select', 'Sélectionner la langue')}
         onMouseEnter={e => {
           if (!isOpen) e.currentTarget.style.background = 'var(--cream-deep)';
         }}
@@ -260,7 +270,7 @@ const LanguageSelector = ({ inline = false }) => {
           if (!isOpen) e.currentTarget.style.background = 'transparent';
         }}
       >
-        <Globe style={{ width: '0.875rem', height: '0.875rem', color: isOpen ? 'var(--terracotta)' : 'var(--ink-mute)' }} />
+        <Globe className="hidden sm:block" style={{ width: '0.875rem', height: '0.875rem', color: isOpen ? 'var(--terracotta)' : 'var(--ink-mute)' }} />
         <span style={{ fontSize: '1.1rem' }}>{currentLanguage.flag}</span>
         <span className="hidden md:inline" style={{ fontWeight: 500, color: 'var(--ink)' }}>
           {currentLanguage.nativeName}
@@ -278,9 +288,9 @@ const LanguageSelector = ({ inline = false }) => {
       <div
         style={{
           position: 'absolute',
-          right: 0,
+          right: -dropdownShift,
           top: 'calc(100% + 0.5rem)',
-          width: '300px',
+          width: 'min(300px, calc(100vw - 2rem))',
           zIndex: 200,
           opacity: isOpen ? 1 : 0,
           transform: isOpen ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(-8px)',

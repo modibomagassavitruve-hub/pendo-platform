@@ -45,7 +45,10 @@
     "capitalization": "Capitalisation",
     "tradingMechanism": "Trading",
     "primaryIndex": "Indice Principal",
-    "keySectors": "Secteurs Clés"
+    "keySectors": "Secteurs Clés",
+    "exchange": "Bourse",
+    "priceRange": "Fourchette de prix",
+    "sector": "Secteur"
   },
   "auth": {
     "login": "Connexion",
@@ -53,7 +56,7 @@
     "register": "S'inscrire",
     "email": "Email",
     "password": "Mot de passe",
-    "confirmPassword": "Confirmer le mot de passe",
+    "confirmPassword": "Confirmer le nouveau mot de passe",
     "forgotPassword": "Mot de passe oublié ?",
     "rememberMe": "Se souvenir de moi",
     "welcome": "Bienvenue",
@@ -90,7 +93,22 @@
       "accessExchanges": "Accès aux 17 bourses africaines",
       "securePortfolio": "Portefeuille sécurisé",
       "personalizedAlerts": "Alertes personnalisées"
-    }
+    },
+    "loginToAnalytics": "Connectez-vous pour analyser la performance de votre portefeuille : répartition par secteur, meilleures et pires positions, évolution dans le temps.",
+    "loginOrRegister": "Se connecter / Créer un compte",
+    "forgotTitle": "Mot de passe oublié",
+    "forgotIntro": "Indiquez votre e-mail : nous vous enverrons un lien pour choisir un nouveau mot de passe.",
+    "forgotSent": "Si un compte existe pour cet e-mail, un lien de réinitialisation vient de vous être envoyé. Pensez à vérifier vos spams.",
+    "resetTitle": "Nouveau mot de passe",
+    "resetDone": "Mot de passe réinitialisé. Vous pouvez maintenant vous connecter.",
+    "changePasswordTitle": "Changer le mot de passe",
+    "changeDone": "Votre mot de passe a été modifié.",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe (8 caractères min.)",
+    "passwordsMismatch": "Les deux mots de passe ne correspondent pas",
+    "sendLink": "Envoyer le lien",
+    "savePassword": "Enregistrer",
+    "backToLogin": "Retour à la connexion"
   },
   "user": {
     "profile": "Mon profil",
@@ -154,7 +172,8 @@
       "description": "Gérez vos stop loss, analysez les indicateurs techniques et calculez vos positions",
       "technicalIndicators": "Indicateurs Techniques",
       "positionCalculator": "Calculateur de Position"
-    }
+    },
+    "watchlistHint": "Cliquez sur l’étoile d’une action dans l’onglet Trading pour l’ajouter ici."
   },
   "opportunities": {
     "title": "Opportunités d'Investissement",
@@ -213,7 +232,8 @@
     "strength": "Force",
     "milestone": "Jalon",
     "marketInsight": "Insight marché",
-    "horizon": "Horizon"
+    "horizon": "Horizon",
+    "showMore": "Afficher plus"
   },
   "analytics": {
     "title": "Analyses & Rapports",
@@ -234,7 +254,8 @@
     "sectorAllocation": "Répartition par secteur",
     "topPerformers": "Meilleures performances",
     "worstPerformers": "Moins bonnes performances",
-    "valueEvolution": "Évolution de la valeur"
+    "valueEvolution": "Évolution de la valeur",
+    "period": "Période"
   },
   "news": {
     "title": "Actualités financières",
@@ -318,10 +339,13 @@
     "priceAbove": "Prix au-dessus de",
     "priceBelow": "Prix en-dessous de",
     "active": "Active",
-    "triggered": "Déclenchée"
+    "triggered": "Déclenchée",
+    "alertType": "Type d'alerte"
   },
   "header": {
-    "mainNavigation": "Navigation principale"
+    "mainNavigation": "Navigation principale",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
   },
   "memberGuard": {
     "virtualPortfolio": "Portefeuille virtuel",
@@ -388,7 +412,9 @@
     "optional": "optionnel",
     "refresh": "Actualiser",
     "skipToContent": "Aller au contenu principal",
-    "mainContent": "Contenu principal"
+    "mainContent": "Contenu principal",
+    "order": "Ordre",
+    "sortBy": "Trier par"
   },
   "filters": {
     "sector": "Secteur",
@@ -407,7 +433,8 @@
     "investmentHigh": "Investissement élevé",
     "allExchanges": "Toutes les bourses",
     "ascending": "Croissant",
-    "descending": "Décroissant"
+    "descending": "Décroissant",
+    "sort": "Trier"
   },
   "sectors": {
     "finance": "Finance",
@@ -778,7 +805,8 @@
     "stopLoss": "Stop Loss",
     "takeProfit": "Take Profit",
     "entryPrice": "Prix d'entrée",
-    "capital": "Capital"
+    "capital": "Capital",
+    "newOrder": "Nouvel ordre"
   },
   "sorting": {
     "sortBy": "Trier par"
@@ -807,7 +835,9 @@
     "priceAlert": "Alerte de prix",
     "orderExecuted": "Ordre exécuté",
     "newsAlert": "Alerte actualité",
-    "systemNotification": "Notification système"
+    "systemNotification": "Notification système",
+    "loginTitle": "Notifications & Alertes",
+    "loginDesc": "Connectez-vous pour recevoir des notifications sur vos marchés et créer des alertes de prix personnalisées."
   },
   "languageSelector": {
     "international": "Langues internationales",
@@ -818,8 +848,9 @@
     "title": "Choisir une langue",
     "search": "Rechercher...",
     "noResults": "Aucun résultat",
-    "footer": "30 langues supportées",
-    "count": "{{count}} langues"
+    "footer": "29 langues prises en charge",
+    "count": "{{count}} langues",
+    "select": "Sélectionner la langue"
   },
   "exchange": {
     "africa": "Afrique",
@@ -853,7 +884,8 @@
     "tradingHoursUTC": "Horaires de trading (UTC)",
     "legendActiveExchanges": "Légende des bourses ({{count}} actives):",
     "africanMarkets": "Marchés Africains",
-    "quickChart": "Graphique rapide"
+    "quickChart": "Graphique rapide",
+    "realTime": "en temps réel"
   },
   "chart": {
     "priceEvolution": "Évolution du cours",
@@ -1268,9 +1300,19 @@
       "heikinAshi": "Heikin Ashi"
     },
     "timeframes": {
-      "1m": "1m", "5m": "5m", "15m": "15m",
-      "1h": "1h", "4h": "4h",
-      "1d": "1J", "1w": "1S", "1M": "1M"
+      "1m": "1m",
+      "5m": "5m",
+      "15m": "15m",
+      "1h": "1h",
+      "4h": "4h",
+      "1d": "1J",
+      "1w": "1S",
+      "1M": "1M"
     }
+  },
+  "errors": {
+    "title": "Une erreur est survenue",
+    "description": "Une erreur inattendue s'est produite. Veuillez recharger la page.",
+    "reload": "Recharger la page"
   }
 }

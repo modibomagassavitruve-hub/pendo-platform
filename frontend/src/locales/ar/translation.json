@@ -14,8 +14,8 @@
     "chat": "الدردشة",
     "notifications": "الإشعارات",
     "about": "من نحن",
-    "trading": "تجارة",
-    "calendar": "تقويم"
+    "trading": "التداول",
+    "calendar": "التقويم"
   },
   "market": {
     "closed": "الأسواق مغلقة حالياً",
@@ -35,7 +35,10 @@
     "capitalization": "القيمة السوقية",
     "tradingMechanism": "التداول",
     "primaryIndex": "المؤشر الرئيسي",
-    "keySectors": "القطاعات الرئيسية"
+    "keySectors": "القطاعات الرئيسية",
+    "exchange": "البورصة",
+    "priceRange": "نطاق السعر",
+    "sector": "القطاع"
   },
   "auth": {
     "login": "تسجيل الدخول",
@@ -43,8 +46,8 @@
     "register": "إنشاء حساب",
     "email": "البريد الإلكتروني",
     "password": "كلمة المرور",
-    "confirmPassword": "تأكيد كلمة المرور",
-    "forgotPassword": "هل نسيت كلمة المرور؟",
+    "confirmPassword": "تأكيد كلمة المرور الجديدة",
+    "forgotPassword": "نسيت كلمة المرور؟",
     "rememberMe": "تذكرني",
     "welcome": "مرحباً",
     "myAccount": "حسابي",
@@ -80,7 +83,22 @@
       "accessExchanges": "الوصول إلى 17 بورصة أفريقية",
       "securePortfolio": "محفظة آمنة",
       "personalizedAlerts": "تنبيهات مخصصة"
-    }
+    },
+    "loginToAnalytics": "سجّل الدخول لتحليل أداء محفظتك: التوزيع حسب القطاع، وأفضل وأسوأ المراكز، والتطور عبر الزمن.",
+    "loginOrRegister": "تسجيل الدخول / إنشاء حساب",
+    "forgotTitle": "نسيت كلمة المرور",
+    "forgotIntro": "أدخل بريدك الإلكتروني وسنرسل لك رابطًا لاختيار كلمة مرور جديدة.",
+    "forgotSent": "إذا كان هناك حساب بهذا البريد، فقد أُرسل رابط إعادة التعيين. تحقق أيضًا من مجلد الرسائل غير المرغوب فيها.",
+    "resetTitle": "كلمة مرور جديدة",
+    "resetDone": "تمت إعادة تعيين كلمة المرور. يمكنك الآن تسجيل الدخول.",
+    "changePasswordTitle": "تغيير كلمة المرور",
+    "changeDone": "تم تغيير كلمة المرور.",
+    "currentPassword": "كلمة المرور الحالية",
+    "newPassword": "كلمة المرور الجديدة (8 أحرف على الأقل)",
+    "passwordsMismatch": "كلمتا المرور غير متطابقتين",
+    "sendLink": "إرسال الرابط",
+    "savePassword": "حفظ",
+    "backToLogin": "العودة إلى تسجيل الدخول"
   },
   "user": {
     "profile": "ملفي الشخصي",
@@ -144,7 +162,8 @@
       "description": "إدارة وقف الخسارة، تحليل المؤشرات الفنية وحساب مراكزك",
       "technicalIndicators": "المؤشرات الفنية",
       "positionCalculator": "حاسبة المراكز"
-    }
+    },
+    "watchlistHint": "انقر على النجمة بجانب أي سهم في تبويب التداول لإضافته هنا."
   },
   "opportunities": {
     "title": "فرص الاستثمار",
@@ -202,7 +221,9 @@
     "strength": "القوة",
     "milestone": "معلم رئيسي",
     "marketInsight": "رؤية السوق",
-    "horizon": "الأفق"
+    "horizon": "الأفق",
+    "relevanceScoreTooltip": "درجة الأهمية المحسوبة (العائد، المخاطر، الحداثة، التحقق، الزخم)",
+    "showMore": "عرض المزيد"
   },
   "analytics": {
     "title": "التحليلات والتقارير",
@@ -223,7 +244,8 @@
     "sectorAllocation": "توزيع القطاعات",
     "topPerformers": "الأفضل أداءً",
     "worstPerformers": "الأسوأ أداءً",
-    "valueEvolution": "تطور القيمة"
+    "valueEvolution": "تطور القيمة",
+    "period": "الفترة"
   },
   "news": {
     "title": "الأخبار المالية",
@@ -237,7 +259,9 @@
     "summary": "ملخص",
     "description": "الوصف",
     "noNewsAvailable": "لا توجد أخبار متاحة",
-    "readFullArticle": "قراءة المقال الكامل على"
+    "readFullArticle": "قراءة المقال الكامل على",
+    "multipleSources_one": "مصدر واحد",
+    "multipleSources_other": "{{count}} مصادر"
   },
   "forum": {
     "title": "منتدى النقاش",
@@ -305,10 +329,13 @@
     "priceAbove": "السعر أعلى من",
     "priceBelow": "السعر أقل من",
     "active": "نشط",
-    "triggered": "مُفعّل"
+    "triggered": "مُفعّل",
+    "alertType": "نوع التنبيه"
   },
   "header": {
-    "mainNavigation": "التنقل الرئيسي"
+    "mainNavigation": "التنقل الرئيسي",
+    "openMenu": "فتح القائمة",
+    "closeMenu": "إغلاق القائمة"
   },
   "memberGuard": {
     "virtualPortfolio": "المحفظة الافتراضية",
@@ -374,8 +401,10 @@
     "selectCountry": "اختر بلداً",
     "optional": "اختياري",
     "refresh": "تحديث",
-    "skipToContent": "كل شيء عن المحتوى الرئيسي",
-    "mainContent": "المحتوى الرئيسي"
+    "skipToContent": "الانتقال إلى المحتوى الرئيسي",
+    "mainContent": "المحتوى الرئيسي",
+    "order": "الترتيب",
+    "sortBy": "ترتيب حسب"
   },
   "filters": {
     "sector": "القطاع",
@@ -393,7 +422,9 @@
     "investmentHigh": "استثمار مرتفع",
     "allExchanges": "جميع التبادلات",
     "ascending": "تصاعدي",
-    "descending": "تنازلي"
+    "descending": "تنازلي",
+    "relevance": "الأهمية",
+    "sort": "ترتيب"
   },
   "sectors": {
     "finance": "المالية",
@@ -525,27 +556,27 @@
     "faq": "الأسئلة الشائعة",
     "support": "الدعم",
     "cookies": "ملفات تعريف الارتباط",
-    "description": "منصة الاستثناء لتتبع أسواق الأسهم الأفريقية في الوقت الفعلي.",
+    "description": "المنصة المرجعية لمتابعة البورصات الأفريقية في الوقت الفعلي",
     "madeWith": "صنع بـ",
     "forAfrica": "من أجل أفريقيا",
     "allRightsReserved": "جميع الحقوق محفوظة",
-    "pricing": "التعريفات",
-    "guides": "أدلة",
-    "glossary": "معجم",
-    "community": "مجتمع",
-    "careers": "كاريير",
-    "press": "اضغط",
+    "pricing": "الأسعار",
+    "guides": "الأدلة",
+    "glossary": "المسرد",
+    "community": "المجتمع",
+    "careers": "الوظائف",
+    "press": "الصحافة",
     "newsletter": "النشرة الإخبارية",
-    "newsletterDesc": "Les Marchés africains chaque semaine، sans brit.",
-    "emailPlaceholder": "votre@email.com",
-    "subscribe": "سابونر",
-    "copyright": "© {{year}} بيندو. جميع الحقوق محفوظة.",
-    "conditions": "شروط",
-    "confidentiality": "السرية",
-    "legalNotice": "يذكر القوانين",
+    "newsletterDesc": "الأسواق الأفريقية كل أسبوع، بلا ضجيج.",
+    "emailPlaceholder": "you@email.com",
+    "subscribe": "اشترك",
+    "copyright": "© {{year}} PENDO. جميع الحقوق محفوظة.",
+    "conditions": "الشروط",
+    "confidentiality": "الخصوصية",
+    "legalNotice": "الإشعار القانوني",
     "pendoColumn": "PENDO",
-    "aboutUs": "À اقتراح",
-    "learnTitle": "Apprendre"
+    "aboutUs": "من نحن",
+    "learnTitle": "تعلّم"
   },
   "about": {
     "title": "من نحن",
@@ -764,7 +795,8 @@
     "stopLoss": "وقف الخسارة",
     "takeProfit": "جني الأرباح",
     "entryPrice": "سعر الدخول",
-    "capital": "رأس المال"
+    "capital": "رأس المال",
+    "newOrder": "أمر جديد"
   },
   "sorting": {
     "sortBy": "ترتيب حسب"
@@ -793,7 +825,9 @@
     "priceAlert": "تنبيه السعر",
     "orderExecuted": "تم تنفيذ الأمر",
     "newsAlert": "تنبيه الأخبار",
-    "systemNotification": "إشعار النظام"
+    "systemNotification": "إشعار النظام",
+    "loginTitle": "الإشعارات والتنبيهات",
+    "loginDesc": "سجّل الدخول لتلقي إشعارات حول أسواقك وإنشاء تنبيهات أسعار مخصصة."
   },
   "languageSelector": {
     "international": "اللغات الدولية",
@@ -804,8 +838,9 @@
     "title": "اختيار اللغة",
     "search": "بحث...",
     "noResults": "لا توجد نتائج",
-    "footer": "30 لغة مدعومة",
-    "count": "{{count}} اللغات"
+    "footer": "29 لغة مدعومة",
+    "count": "{{count}} اللغات",
+    "select": "اختيار اللغة"
   },
   "exchange": {
     "africa": "أفريقيا",
@@ -839,7 +874,8 @@
     "tradingHoursUTC": "ساعات التداول (UTC)",
     "legendActiveExchanges": "أسطورة البورصات ({{count}} نشطة):",
     "africanMarkets": "الأسواق الأفريقية",
-    "quickChart": "رسم بياني سريع"
+    "quickChart": "رسم بياني سريع",
+    "realTime": "في الوقت الفعلي"
   },
   "chart": {
     "priceEvolution": "تطور السعر",
@@ -1035,7 +1071,7 @@
     "subtitle": "من أفريقيا",
     "description": "المنصة المرجعية لرصد الأسواق المالية الأفريقية. المؤشرات والأسهم والعملات والسلع في الوقت الحقيقي.",
     "cta": "استكشف الأسواق",
-    "exchanges": "المنح الدراسية الأفريقية",
+    "exchanges": "البورصات الأفريقية",
     "countries": "البلدان المشمولة",
     "assets": "تتبع الأصول"
   },
@@ -1092,159 +1128,191 @@
     }
   },
   "dashboard": {
-    "title": "لوحة القيادة بيندو",
+    "title": "لوحة تحكم PENDO",
     "greeting": {
-      "night": "ليلة سعيدة",
+      "night": "تصبح على خير",
       "morning": "صباح الخير",
-      "afternoon": "أتمنى لك التوفيق",
-      "evening": "أتمنى لك التوفيق"
+      "afternoon": "مساء الخير",
+      "evening": "مساء الخير"
     },
-    "refresh": "المحدث",
-    "marketsOpen_one": "{{count}} مارشيه أوفيرت",
-    "marketsOpen_other": "{{count}} فتحات مفتوحة",
+    "refresh": "تحديث",
+    "marketsOpen_one": "سوق مفتوحة واحدة",
+    "marketsOpen_other": "{{count}} أسواق مفتوحة",
     "portfolioValue": "قيمة المحفظة",
-    "positions_one": "موقف {{count}}",
-    "positions_other": "{{count}} المواقف",
-    "totalGainLoss": "الربح / مجموع بيرتي",
-    "activeAlerts": "تنبيهات النشطة",
-    "noAlert": "تنبيه جيد",
-    "viewAlerts": "شاهد التنبيهات",
-    "trackedMarkets": "مارشيز سويفيس",
-    "allClosed": "كل شيء",
-    "openCount": "{{count}} الفتحة (الفتحات)",
+    "positions_one": "مركز واحد",
+    "positions_other": "{{count}} مراكز",
+    "totalGainLoss": "إجمالي الربح / الخسارة",
+    "activeAlerts": "التنبيهات النشطة",
+    "noAlert": "لا توجد تنبيهات",
+    "viewAlerts": "عرض التنبيهات",
+    "trackedMarkets": "الأسواق المتابَعة",
+    "allClosed": "كلها مغلقة",
+    "openCount": "{{count}} مفتوحة",
     "africanExchanges": "البورصات الأفريقية",
-    "openMarkets": "مارشيه ينفتح",
-    "liveData": "Données بشكل مباشر",
-    "exchangesCovered": "أغطية البورصات",
+    "openMarkets": "الأسواق المفتوحة",
+    "liveData": "بيانات مباشرة",
+    "exchangesCovered": "بورصات مشمولة",
     "activeOpportunities": "الفرص النشطة",
-    "myMarkets": "مسيرات",
-    "africanMarkets": "المسيرات الأفريقية",
-    "viewAll": "اقرأ كل شيء",
-    "topMovers": "أهم الحركات في اليوم",
-    "addWatchlistHint": "أضف الإجراءات إلى قائمة المتابعة الخاصة بك لرحلتك.",
+    "myMarkets": "أسواقي",
+    "africanMarkets": "الأسواق الأفريقية",
+    "viewAll": "عرض الكل",
+    "topMovers": "أبرز التحركات اليوم",
+    "addWatchlistHint": "أضف أسهماً إلى قائمة المتابعة لترى أسواقك هنا.",
     "activePriceAlerts": "تنبيهات الأسعار النشطة",
-    "manageAlerts": "قم بتشغيل التنبيهات",
+    "manageAlerts": "إدارة التنبيهات",
     "watchlist": "قائمة المتابعة",
-    "portfolioLink": "بورتفيو",
+    "portfolioLink": "المحفظة",
     "tableHeaders": {
-      "ticker": "شريط",
+      "ticker": "الرمز",
       "name": "الاسم",
-      "price": "الجائزة",
-      "change": "تفاوت",
-      "target": "سيبل",
-      "distance": "مسافة"
+      "price": "السعر",
+      "change": "التغير",
+      "target": "الهدف",
+      "distance": "المسافة"
     },
-    "latestNews": "أحدث الأحداث",
-    "allNews": "جميع الأخبار",
-    "noNewsAvailable": "متوفر بالفعل",
+    "latestNews": "آخر الأخبار",
+    "allNews": "كل الأخبار",
+    "noNewsAvailable": "لا توجد أخبار متاحة",
     "investmentOpportunities": "فرص الاستثمار",
-    "noOpportunitiesAvailable": "هناك فرصة متاحة",
-    "personalizedDashboard": "تخصيص لوحة القيادة",
-    "loginCTADesc": "Connectez-vous pour voir votre portefeuille، vos notifications de prix et vos Marchés Favorites en un cup d'œil.",
-    "signIn": "هذا هو الرابط",
-    "justNow": "على الفور",
-    "minutesAgo": "هناك {{count}} دقيقة",
-    "hoursAgo": "هناك {{count}} ح",
-    "daysAgo": "هناك {{count}} ي"
+    "noOpportunitiesAvailable": "لا توجد فرص متاحة",
+    "personalizedDashboard": "لوحة تحكم مخصصة",
+    "loginCTADesc": "سجّل الدخول لرؤية محفظتك وتنبيهات الأسعار وأسواقك المفضلة في لمحة واحدة.",
+    "signIn": "تسجيل الدخول",
+    "justNow": "الآن",
+    "minutesAgo": "منذ {{count}} دقيقة",
+    "hoursAgo": "منذ {{count}} ساعة",
+    "daysAgo": "منذ {{count}} يوم",
+    "marketAlerts": "تنبيهات السوق",
+    "noAnomalies": "لم يُرصد أي تحرك غير اعتيادي",
+    "anomalyBadge": "تحرك غير اعتيادي",
+    "multipleSources_one": "مصدر واحد",
+    "multipleSources_other": "{{count}} مصادر",
+    "relevanceScoreTooltip": "درجة الأهمية المحسوبة (العائد، المخاطر، الحداثة، التحقق، الزخم)"
   },
   "calendar": {
     "title": "التقويم الاقتصادي الأفريقي",
-    "subtitle": "قرارات الرسوم، PIB، التضخم، مؤشر مديري المشتريات (PMI) — {{count}} المؤشرات اللاحقة",
+    "subtitle": "قرارات أسعار الفائدة، الناتج المحلي الإجمالي، التضخم، مؤشر مديري المشتريات — {{count}} مؤشراً",
     "viewList": "قائمة",
-    "viewCalendar": "التقويم",
-    "next7Days": "بروشينس 7 أيام",
-    "allCountries": "كل شيء يدفع",
-    "today": "اوجوردوي",
-    "noEvents": "Aucun événement ce mois-ci",
-    "noEventsHint": "قم بتغيير المرشحات أو التنقل خلال شهر آخر",
-    "todayBadge": "أوجوردوي",
+    "viewCalendar": "تقويم",
+    "next7Days": "الأيام السبعة القادمة",
+    "allCountries": "كل الدول",
+    "today": "اليوم",
+    "noEvents": "لا توجد أحداث هذا الشهر",
+    "noEventsHint": "غيّر المرشحات أو انتقل إلى شهر آخر",
+    "todayBadge": "اليوم",
     "moreEvents": "+{{count}} أخرى",
-    "statsEvents_one": "حدث {{count}} في {{month}}",
-    "statsEvents_other": "{{count}} الأحداث في {{month}}",
-    "statsHighImpact": "{{count}} تأثير الحصن",
-    "statsCountries_one": "{{count}} يدفع",
-    "statsCountries_other": "{{count}} يدفع",
+    "statsEvents_one": "حدث واحد في {{month}}",
+    "statsEvents_other": "{{count}} أحداث في {{month}}",
+    "statsHighImpact": "{{count}} عالية التأثير",
+    "statsCountries_one": "دولة واحدة",
+    "statsCountries_other": "{{count}} دول",
     "categories": {
-      "all": "طوس",
-      "rates": "توكس",
-      "inflation": "تضخم اقتصادي",
-      "gdp": "PIB",
-      "pmi": "PMI",
-      "trade": "تجارة"
+      "all": "الكل",
+      "rates": "أسعار الفائدة",
+      "inflation": "التضخم",
+      "gdp": "الناتج المحلي",
+      "pmi": "مؤشر مديري المشتريات",
+      "trade": "التجارة"
     },
     "impact": {
-      "all": "طوس",
-      "high": "حصن",
-      "medium": "موين",
-      "low": "فاشل"
+      "all": "الكل",
+      "high": "مرتفع",
+      "medium": "متوسط",
+      "low": "منخفض"
     },
-    "days": "لون، مارس، مير، جو، فين، سام، ديم",
-    "months": "جانفييه، فيفرييه، المريخ، أفريل، ماي، يونيو، جوليت، أوت، سبتمبر، أكتوبر، نوفمبر، ديسمبر",
+    "days": [
+      "الإثنين",
+      "الثلاثاء",
+      "الأربعاء",
+      "الخميس",
+      "الجمعة",
+      "السبت",
+      "الأحد"
+    ],
+    "months": [
+      "يناير",
+      "فبراير",
+      "مارس",
+      "أبريل",
+      "مايو",
+      "يونيو",
+      "يوليو",
+      "أغسطس",
+      "سبتمبر",
+      "أكتوبر",
+      "نوفمبر",
+      "ديسمبر"
+    ],
     "eventNames": {
-      "za_rate_q1": "قرار توكس SARB",
-      "za_cpi": "IPC (التضخم)",
-      "za_gdp": "PIB تريميسترييل",
-      "za_pmi": "الشركة المصنعة لمؤشر مديري المشتريات (PMI).",
-      "za_trade": "ميزان تجاري",
-      "ng_rate": "قرار توكس CBN",
-      "ng_cpi": "IPC (التضخم)",
-      "ng_gdp": "PIB تريميسترييل",
-      "ng_pmi": "مؤشر مديري المشتريات ستانبيك IBTC",
-      "eg_rate": "قرار البنك المركزي المصري",
-      "eg_cpi": "IPC (التضخم)",
-      "eg_gdp": "PIB تريميسترييل",
-      "eg_pmi": "مؤشر مديري المشتريات (S&P) العالمي",
-      "ma_rate": "قرار توكس بام",
-      "ma_cpi": "IPC (التضخم)",
-      "ma_gdp": "PIB تريميسترييل",
-      "ke_rate": "قرار توكس بنك الكويت المركزي",
-      "ke_cpi": "IPC (التضخم)",
-      "ke_gdp": "PIB تريميسترييل",
-      "ke_pmi": "مؤشر مديري المشتريات ستانبيك",
-      "tn_rate": "قرار توكس BCT",
-      "tn_cpi": "IPC (التضخم)",
-      "gh_rate": "قرار توكس BoG",
-      "gh_cpi": "IPC (التضخم)",
-      "xof_rate": "قرار تاو BCEAO",
-      "xaf_rate": "قرار توكس BEAC",
-      "mu_rate": "قرار توكس BoM",
-      "bw_rate": "قرار توكس بوب"
+      "za_rate_q1": "قرار سعر الفائدة (SARB)",
+      "za_cpi": "مؤشر أسعار المستهلك (التضخم)",
+      "za_gdp": "الناتج المحلي الإجمالي الفصلي",
+      "za_pmi": "مؤشر مديري المشتريات الصناعي",
+      "za_trade": "الميزان التجاري",
+      "ng_rate": "قرار سعر الفائدة (CBN)",
+      "ng_cpi": "مؤشر أسعار المستهلك (التضخم)",
+      "ng_gdp": "الناتج المحلي الإجمالي الفصلي",
+      "ng_pmi": "مؤشر مديري المشتريات Stanbic IBTC",
+      "eg_rate": "قرار سعر الفائدة (CBE)",
+      "eg_cpi": "مؤشر أسعار المستهلك (التضخم)",
+      "eg_gdp": "الناتج المحلي الإجمالي الفصلي",
+      "eg_pmi": "مؤشر مديري المشتريات S&P Global",
+      "ma_rate": "قرار سعر الفائدة (BAM)",
+      "ma_cpi": "مؤشر أسعار المستهلك (التضخم)",
+      "ma_gdp": "الناتج المحلي الإجمالي الفصلي",
+      "ke_rate": "قرار سعر الفائدة (CBK)",
+      "ke_cpi": "مؤشر أسعار المستهلك (التضخم)",
+      "ke_gdp": "الناتج المحلي الإجمالي الفصلي",
+      "ke_pmi": "مؤشر مديري المشتريات Stanbic",
+      "tn_rate": "قرار سعر الفائدة (BCT)",
+      "tn_cpi": "مؤشر أسعار المستهلك (التضخم)",
+      "gh_rate": "قرار سعر الفائدة (BoG)",
+      "gh_cpi": "مؤشر أسعار المستهلك (التضخم)",
+      "xof_rate": "قرار سعر الفائدة (BCEAO)",
+      "xaf_rate": "قرار سعر الفائدة (BEAC)",
+      "mu_rate": "قرار سعر الفائدة (BoM)",
+      "bw_rate": "قرار سعر الفائدة (BoB)"
     },
     "countryNames": {
-      "ZA": "أفريقيا الجنوبية",
+      "ZA": "جنوب أفريقيا",
       "NG": "نيجيريا",
       "EG": "مصر",
       "MA": "المغرب",
       "KE": "كينيا",
       "TN": "تونس",
       "GH": "غانا",
-      "XOF": "UEMOA",
-      "XAF": "CEMAC",
-      "MU": "موريس",
+      "XOF": "الاتحاد الاقتصادي والنقدي لغرب أفريقيا",
+      "XAF": "المجموعة الاقتصادية والنقدية لوسط أفريقيا",
+      "MU": "موريشيوس",
       "BW": "بوتسوانا"
     }
   },
   "trading": {
     "indicators": "المؤشرات",
     "alert": "تنبيه",
-    "open": "أوفيرت",
-    "closed": "فيرميه",
+    "open": "مفتوح",
+    "closed": "مغلق",
     "chartTypes": {
-      "candles": "البوجيات",
-      "bars": "باريز",
-      "line": "ليجن",
-      "area": "منطقة",
-      "heikinAshi": "هيكين اشي"
+      "candles": "شموع",
+      "bars": "أعمدة",
+      "line": "خط",
+      "area": "مساحة",
+      "heikinAshi": "Heikin Ashi"
     },
     "timeframes": {
-      "1m": "1 م",
-      "5m": "5 م",
-      "15m": "15 م",
-      "1h": "ساعة واحدة",
-      "4h": "4 ساعات",
-      "1d": "1J",
-      "1w": "1S",
-      "1M": "1 م"
+      "1m": "1د",
+      "5m": "5د",
+      "15m": "15د",
+      "1h": "1س",
+      "4h": "4س",
+      "1d": "يوم",
+      "1w": "أسبوع",
+      "1M": "شهر"
     }
+  },
+  "errors": {
+    "title": "حدث خطأ",
+    "description": "حدث خطأ غير متوقع. يرجى إعادة تحميل الصفحة.",
+    "reload": "إعادة تحميل الصفحة"
   }
 }

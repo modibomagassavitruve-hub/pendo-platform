@@ -77,6 +77,10 @@ const OpportunitiesTab = () => {
   });
 
   const [showFilters, setShowFilters] = useState(false);
+  // Affichage progressif : 950+ cartes d'un coup rendaient la page très lourde
+  const PAGE_SIZE = 24;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  useEffect(() => { setVisibleCount(PAGE_SIZE); }, [filters]);
 
   useEffect(() => {
     if (!hookLoading) {
@@ -393,7 +397,7 @@ const OpportunitiesTab = () => {
 
       {/* Opportunity cards grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        {opportunities.map((opp) => {
+        {opportunities.slice(0, visibleCount).map((opp) => {
           const SectorIcon = getSectorIcon(opp.sector);
           const riskStyle = getRiskStyle(opp.risk_level || opp.riskLevel);
 
@@ -415,6 +419,18 @@ const OpportunitiesTab = () => {
           );
         })}
       </div>
+
+      {/* Afficher plus */}
+      {opportunities.length > visibleCount && (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '1.5rem' }}>
+          <button
+            onClick={() => setVisibleCount(c => c + PAGE_SIZE)}
+            style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 600, padding: '0.65rem 1.5rem', borderRadius: '99px', border: '1.5px solid rgba(26,20,16,0.15)', background: 'var(--cream, #fff)', color: 'var(--ink)', cursor: 'pointer' }}
+          >
+            {t('opportunities.showMore', 'Afficher plus')} ({Math.min(visibleCount, opportunities.length)} / {opportunities.length})
+          </button>
+        </div>
+      )}
 
       {/* Empty state */}
       {!loading && opportunities.length === 0 && (() => {

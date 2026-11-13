@@ -1,5 +1,6 @@
 import React from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import i18n from '../i18n';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -71,7 +72,7 @@ class ErrorBoundary extends React.Component {
               color: 'var(--ink)',
               marginBottom: '0.75rem',
             }}>
-              Une erreur est survenue
+              {i18n.t('errors.title', 'Une erreur est survenue')}
             </h2>
             <p style={{
               fontFamily: 'var(--font-body)',
@@ -80,7 +81,7 @@ class ErrorBoundary extends React.Component {
               lineHeight: 1.65,
               marginBottom: '1.75rem',
             }}>
-              Une erreur inattendue s'est produite. Veuillez recharger la page.
+              {i18n.t('errors.description', "Une erreur inattendue s'est produite. Veuillez recharger la page.")}
             </p>
             <button
               onClick={this.handleReload}
@@ -101,7 +102,7 @@ class ErrorBoundary extends React.Component {
               onMouseLeave={e => { e.currentTarget.style.background = 'var(--ink)'; }}
             >
               <RefreshCw style={{ width: '16px', height: '16px' }} />
-              Recharger la page
+              {i18n.t('errors.reload', 'Recharger la page')}
             </button>
           </div>
         </div>

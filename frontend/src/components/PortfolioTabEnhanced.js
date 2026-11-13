@@ -17,7 +17,7 @@ import PositionSizingCalculator from './PositionSizingCalculator';
 import { SkeletonStatGrid, SkeletonChart, SkeletonTable } from './ui/SkeletonLoader';
 import logger from '../utils/logger';
 
-const PortfolioTabEnhanced = () => {
+const PortfolioTabEnhanced = ({ onOpenLogin }) => {
   const { token, isAuthenticated } = useAuth();
   const { t } = useTranslation();
   const [portfolioData, setPortfolioData] = useState(null);
@@ -77,6 +77,11 @@ const PortfolioTabEnhanced = () => {
         <p style={{ fontFamily: 'var(--font-body)', color: 'var(--ink-mute)', maxWidth: '400px', lineHeight: 1.6 }}>
           {t('auth.loginToPortfolio') || 'Connectez-vous pour gérer votre portefeuille, suivre vos transactions et analyser vos performances.'}
         </p>
+        {onOpenLogin && (
+          <button onClick={onOpenLogin} style={{ marginTop: '1.5rem', padding: '0.65rem 1.5rem', borderRadius: '999px', border: 'none', background: 'var(--accent, #c9a227)', color: '#fff', fontFamily: 'var(--font-body)', fontWeight: 600, cursor: 'pointer' }}>
+            {t('auth.loginOrRegister', 'Se connecter / Créer un compte')}
+          </button>
+        )}
       </div>
     );
   }

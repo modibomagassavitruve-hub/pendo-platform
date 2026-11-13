@@ -35,7 +35,7 @@ const NewConversationModal = ({ onClose, onConversationCreated }) => {
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, zIndex: 50,
+      position: 'fixed', inset: 0, zIndex: 1000,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       padding: '1rem',
       background: 'rgba(26,20,16,0.55)',

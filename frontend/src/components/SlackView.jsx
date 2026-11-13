@@ -136,7 +136,7 @@ export default function SlackView({
       case 'analytics': return <AnalyticsTab />;
       case 'calendar': return <EconomicCalendar />;
       case 'notifications': return <NotificationCenter isOpen onClose={() => go('dashboard')} onOpenLogin={openLogin} />;
-      case 'forum': return isAuthenticated ? <ForumMain /> : <MemberGuard onOpenLogin={openLogin} feature="Forum" />;
+      case 'forum': return <ForumMain onOpenLogin={openLogin} />;
       case 'chat': return isAuthenticated ? <ChatMain /> : <MemberGuard onOpenLogin={openLogin} feature="Chat Communauté" />;
       case 'about': return <AboutUs />;
       default: return null;

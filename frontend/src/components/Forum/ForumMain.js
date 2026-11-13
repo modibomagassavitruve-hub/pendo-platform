@@ -8,7 +8,7 @@ import ThreadDetail from './ThreadDetail';
 import { API_URL } from '../../config';
 import logger from '../../utils/logger';
 
-const ForumMain = () => {
+const ForumMain = ({ onOpenLogin }) => {
   const { t } = useTranslation();
   const [activeView, setActiveView] = useState('categories');
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -86,8 +86,8 @@ const ForumMain = () => {
       {/* Content */}
       <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '2rem 1rem' }}>
         {activeView === 'categories' && <ForumCategories onCategorySelect={handleCategorySelect} />}
-        {activeView === 'threads' && <ThreadList category={selectedCategory} onThreadSelect={handleThreadSelect} onBack={handleBack} />}
-        {activeView === 'thread' && <ThreadDetail thread={selectedThread} onBack={handleBack} />}
+        {activeView === 'threads' && <ThreadList category={selectedCategory} onThreadSelect={handleThreadSelect} onBack={handleBack} onOpenLogin={onOpenLogin} />}
+        {activeView === 'thread' && <ThreadDetail thread={selectedThread} onBack={handleBack} onOpenLogin={onOpenLogin} />}
       </div>
     </div>
   );

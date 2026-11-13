@@ -37,7 +37,8 @@ const makeTimeAgo = (t) => (dateStr) => {
 const ChangeChip = ({ value, small }) => {
   const n = parseFloat(value);
   const pos = !isNaN(n) ? n >= 0 : String(value).includes('+');
-  const zero = !isNaN(n) && n === 0;
+  // Pas de variation connue (donnée non actualisée) : affichage neutre « — »
+  const zero = isNaN(n) ? !String(value ?? '').includes('+') : n === 0;
   const Icon = zero ? Minus : pos ? TrendingUp : TrendingDown;
   return (
     <span style={{
@@ -51,7 +52,7 @@ const ChangeChip = ({ value, small }) => {
       color: zero ? 'var(--ink-mute)' : pos ? 'var(--forest)' : 'var(--terracotta)',
     }}>
       <Icon style={{ width: small ? 9 : 11, height: small ? 9 : 11 }} />
-      {!isNaN(n) ? `${pos ? '+' : ''}${n.toFixed(2)}%` : value}
+      {!isNaN(n) ? `${pos ? '+' : ''}${n.toFixed(2)}%` : (value ?? '—')}
     </span>
   );
 };
@@ -354,7 +355,7 @@ const DashboardTab = ({ markets: marketsProp, apiStatus, setActiveTab, onOpenLog
         </div>
         <button
           onClick={handleRefresh}
-          title="Actualiser"
+          title={t('dashboard.refresh')}
           style={{
             display: 'flex', alignItems: 'center', gap: '0.4rem',
             padding: '0.5rem 1rem',
@@ -415,7 +416,7 @@ const DashboardTab = ({ markets: marketsProp, apiStatus, setActiveTab, onOpenLog
           <>
             <StatCard icon={Globe} iconBg="rgba(194,73,22,0.1)" iconColor="var(--terracotta)" label={t('dashboard.africanExchanges')} value={markets.length} loading={false} />
             <StatCard icon={TrendingUp} iconBg="rgba(30,77,58,0.08)" iconColor="var(--forest)" label={t('dashboard.openMarkets')} value={openMarketsCount} loading={false} />
-            <StatCard icon={Activity} iconBg="rgba(232,170,11,0.1)" iconColor="#9A6E00" label={t('dashboard.liveData')} value="17" sub={t('dashboard.exchangesCovered')} loading={false} />
+            <StatCard icon={Activity} iconBg="rgba(232,170,11,0.1)" iconColor="#9A6E00" label={t('dashboard.liveData')} value={markets.filter(m => !m.stale).length} sub={t('dashboard.exchangesCovered')} loading={false} />
             <StatCard icon={BarChart3} iconBg="rgba(194,73,22,0.08)" iconColor="var(--terracotta)" label={t('dashboard.activeOpportunities')} value={opportunities.length || '–'} loading={loadingPublic} />
           </>
         )}

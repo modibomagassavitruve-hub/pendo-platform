@@ -71,7 +71,7 @@ const ArticleDetail = ({ article, onClose }) => {
 
   return (
     <div style={{
-      position: 'fixed', inset: 0, zIndex: 50,
+      position: 'fixed', inset: 0, zIndex: 1000,
       display: 'flex', alignItems: 'flex-start', justifyContent: 'center',
       padding: '1rem', overflowY: 'auto',
       background: 'rgba(26,20,16,0.7)',

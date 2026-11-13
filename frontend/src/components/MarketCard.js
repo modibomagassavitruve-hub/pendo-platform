@@ -219,7 +219,7 @@ const MarketCard = ({ market }) => {
               fontVariantNumeric: 'tabular-nums',
               color: positive ? 'var(--forest)' : 'var(--terracotta)',
             }}>
-              {positive ? '▲' : '▼'} {change}
+              {change === '—' ? '—' : <>{positive ? '▲' : '▼'} {change}</>}
             </span>
 
             {/* Volume */}

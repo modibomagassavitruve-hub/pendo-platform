@@ -62,7 +62,6 @@ async function getLatestSnapshots(pool) {
     const { rows } = await pool.query(`
       SELECT DISTINCT ON (market_id) market_id, value, change_percent, source, fetched_at
       FROM market_snapshots
-      WHERE fetched_at > NOW() - INTERVAL '24 hours'
       ORDER BY market_id, fetched_at DESC
     `);
 
@@ -101,8 +100,12 @@ async function getMarkets(pool) {
 
   const markets = MARKET_CONFIG.map(market => {
     const snap = snapshots[market.id];
-    const data = snap || { value: market.baseValue, change: dailySeedChange(market.id), source: 'Valeur de référence' };
-    const isPositive = data.change >= 0;
+    // Pas de donnée collectée : on affiche la valeur de référence SANS inventer de variation
+    const data = snap || { value: market.baseValue, change: null, source: 'Valeur de référence (non actualisée)' };
+    const hasChange = typeof data.change === 'number' && !isNaN(data.change);
+    const isPositive = hasChange ? data.change >= 0 : true;
+    // Donnée de plus de 3 jours = périmée
+    const stale = !snap || (snap.fetchedAt && (Date.now() - new Date(snap.fetchedAt).getTime()) > 3 * 86400000);
 
     // Determine market open/close status
     let isOpen = false;
@@ -127,8 +130,9 @@ async function getMarkets(pool) {
         ? data.value.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
         : String(data.value),
       rawValue: data.value,
-      change: `${isPositive ? '+' : ''}${data.change.toFixed(2)}%`,
-      changePercent: parseFloat(data.change.toFixed(2)),
+      change: hasChange ? `${isPositive ? '+' : ''}${data.change.toFixed(2)}%` : '—',
+      changePercent: hasChange ? parseFloat(data.change.toFixed(2)) : null,
+      stale,
       positive: isPositive,
       volume: 'N/A',
       marketCap: data.value * 1000000,
@@ -195,6 +199,7 @@ async function getMarketHistory(pool, days = 14) {
 
     const byMarket = {};
     for (const row of rows) {
+      if (row.change_percent === null) continue; // variation inconnue : exclue des statistiques
       if (!byMarket[row.market_id]) byMarket[row.market_id] = [];
       byMarket[row.market_id].push({
         change: parseFloat(row.change_percent),

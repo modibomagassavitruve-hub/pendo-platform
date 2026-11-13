@@ -11,7 +11,7 @@ import { exportAnalyticsPDF } from '../utils/exportUtils';
 import { SkeletonStatGrid, SkeletonChart } from './ui/SkeletonLoader';
 import logger from '../utils/logger';
 
-const AnalyticsTab = () => {
+const AnalyticsTab = ({ onOpenLogin }) => {
   const { t } = useTranslation();
   const { token, isAuthenticated } = useAuth();
   const [performanceData, setPerformanceData] = useState([]);
@@ -90,11 +90,16 @@ const AnalyticsTab = () => {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '5rem 1rem', textAlign: 'center' }}>
         <Activity style={{ width: '3rem', height: '3rem', color: 'var(--ink-mute)', opacity: 0.3, display: 'block', marginBottom: '1rem' }} />
         <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 500, fontSize: '1.5rem', color: 'var(--ink)', marginBottom: '0.5rem' }}>
-          {t('auth.login')}
+          {t('auth.loginRequired', 'Connexion requise')}
         </h2>
-        <p style={{ fontFamily: 'var(--font-body)', color: 'var(--ink-mute)', fontSize: '0.875rem' }}>
-          {t('analytics.title')}
+        <p style={{ fontFamily: 'var(--font-body)', color: 'var(--ink-mute)', maxWidth: '420px', lineHeight: 1.6 }}>
+          {t('auth.loginToAnalytics', 'Connectez-vous pour analyser la performance de votre portefeuille : répartition par secteur, meilleures et pires positions, évolution dans le temps.')}
         </p>
+        {onOpenLogin && (
+          <button onClick={onOpenLogin} style={{ marginTop: '1.5rem', padding: '0.65rem 1.5rem', borderRadius: '999px', border: 'none', background: 'var(--accent, #c9a227)', color: '#fff', fontFamily: 'var(--font-body)', fontWeight: 600, cursor: 'pointer' }}>
+            {t('auth.loginOrRegister', 'Se connecter / Créer un compte')}
+          </button>
+        )}
       </div>
     );
   }

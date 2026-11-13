@@ -5,6 +5,11 @@ import logger from '../utils/logger';
 const AuthContext = createContext(null);
 const AUTH_URL = `${BASE_API_URL}/auth`;
 
+// Le backend renvoie error = { message, code } : on n'affiche que le texte
+const errorText = (err, fallback) =>
+  (typeof err === 'string' ? err : err && err.message) || fallback;
+
+
 // ── Token expiry check (decode JWT payload without library) ────────────
 function isTokenExpired(token) {
   if (!token) return true;
@@ -80,10 +85,18 @@ export const AuthProvider = ({ children }) => {
       });
       const data = await response.json();
       if (data.success) {
+        // Connexion automatique après l'inscription
+        const { token: newToken, user: newUser } = data.data || {};
+        if (newToken) {
+          localStorage.setItem('pendo_token', newToken);
+          setToken(newToken);
+          setUser(newUser);
+        }
         return { success: true, data: data.data };
       } else {
-        setError(data.error);
-        return { success: false, error: data.error };
+        const msg = errorText(data.error, "Erreur lors de l'inscription");
+        setError(msg);
+        return { success: false, error: msg };
       }
     } catch (error) {
       const errorMsg = "Erreur lors de l'inscription";
@@ -112,8 +125,9 @@ export const AuthProvider = ({ children }) => {
         setUser(userData);
         return { success: true };
       } else {
-        setError(data.error);
-        return { success: false, error: data.error };
+        const msg = errorText(data.error, 'Erreur lors de la connexion');
+        setError(msg);
+        return { success: false, error: msg };
       }
     } catch (err) {
       const errorMsg = 'Erreur lors de la connexion';
@@ -156,7 +170,7 @@ export const AuthProvider = ({ children }) => {
       });
       const data = await response.json();
       if (data.success) { setUser(data.data); return { success: true }; }
-      else { setError(data.error); return { success: false, error: data.error }; }
+      else { const msg = errorText(data.error, 'Erreur'); setError(msg); return { success: false, error: msg }; }
     } catch (error) {
       const errorMsg = 'Erreur lors de la mise à jour du profil';
       setError(errorMsg);
@@ -176,7 +190,7 @@ export const AuthProvider = ({ children }) => {
       });
       const data = await response.json();
       if (data.success) return { success: true };
-      else { setError(data.error); return { success: false, error: data.error }; }
+      else { const msg = errorText(data.error, 'Erreur'); setError(msg); return { success: false, error: msg }; }
     } catch (error) {
       const errorMsg = 'Erreur lors du changement de mot de passe';
       setError(errorMsg);
@@ -196,7 +210,7 @@ export const AuthProvider = ({ children }) => {
       });
       const data = await response.json();
       if (data.success) { await loadUserProfile(); return { success: true }; }
-      else { setError(data.error); return { success: false, error: data.error }; }
+      else { const msg = errorText(data.error, 'Erreur'); setError(msg); return { success: false, error: msg }; }
     } catch (error) {
       const errorMsg = 'Erreur lors de la mise à jour des préférences';
       setError(errorMsg);

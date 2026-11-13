@@ -45,7 +45,10 @@
     "capitalization": "Capitalization",
     "tradingMechanism": "Trading",
     "primaryIndex": "Primary Index",
-    "keySectors": "Key Sectors"
+    "keySectors": "Key Sectors",
+    "exchange": "Exchange",
+    "priceRange": "Price range",
+    "sector": "Sector"
   },
   "auth": {
     "login": "Login",
@@ -53,7 +56,7 @@
     "register": "Sign up",
     "email": "Email",
     "password": "Password",
-    "confirmPassword": "Confirm password",
+    "confirmPassword": "Confirm new password",
     "forgotPassword": "Forgot password?",
     "rememberMe": "Remember me",
     "welcome": "Welcome",
@@ -90,7 +93,22 @@
       "accessExchanges": "Access to 17 African stock exchanges",
       "securePortfolio": "Secure portfolio",
       "personalizedAlerts": "Personalized alerts"
-    }
+    },
+    "loginToAnalytics": "Sign in to analyse your portfolio performance: sector allocation, best and worst positions, and evolution over time.",
+    "loginOrRegister": "Sign in / Create an account",
+    "forgotTitle": "Forgot password",
+    "forgotIntro": "Enter your email and we will send you a link to choose a new password.",
+    "forgotSent": "If an account exists for this email, a reset link has just been sent. Check your spam folder too.",
+    "resetTitle": "New password",
+    "resetDone": "Password reset. You can now sign in.",
+    "changePasswordTitle": "Change password",
+    "changeDone": "Your password has been changed.",
+    "currentPassword": "Current password",
+    "newPassword": "New password (min. 8 characters)",
+    "passwordsMismatch": "The two passwords do not match",
+    "sendLink": "Send link",
+    "savePassword": "Save",
+    "backToLogin": "Back to sign in"
   },
   "user": {
     "profile": "My profile",
@@ -154,7 +172,8 @@
       "description": "Manage your stop loss, analyze technical indicators and calculate your positions",
       "technicalIndicators": "Technical Indicators",
       "positionCalculator": "Position Calculator"
-    }
+    },
+    "watchlistHint": "Click the star on a stock in the Trading tab to add it here."
   },
   "opportunities": {
     "title": "Investment Opportunities",
@@ -213,7 +232,8 @@
     "strength": "Strength",
     "milestone": "Milestone",
     "marketInsight": "Market insight",
-    "horizon": "Horizon"
+    "horizon": "Horizon",
+    "showMore": "Show more"
   },
   "analytics": {
     "title": "Analytics & Reports",
@@ -234,7 +254,8 @@
     "sectorAllocation": "Sector allocation",
     "topPerformers": "Top performers",
     "worstPerformers": "Worst performers",
-    "valueEvolution": "Value evolution"
+    "valueEvolution": "Value evolution",
+    "period": "Period"
   },
   "news": {
     "title": "Financial news",
@@ -318,10 +339,13 @@
     "priceAbove": "Price above",
     "priceBelow": "Price below",
     "active": "Active",
-    "triggered": "Triggered"
+    "triggered": "Triggered",
+    "alertType": "Alert type"
   },
   "header": {
-    "mainNavigation": "Main navigation"
+    "mainNavigation": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
   },
   "memberGuard": {
     "virtualPortfolio": "Virtual portfolio",
@@ -387,8 +411,10 @@
     "selectCountry": "Select a country",
     "optional": "optional",
     "refresh": "Refresh",
-    "skipToContent": "Aller au contenu principal",
-    "mainContent": "Contenu principal"
+    "skipToContent": "Skip to main content",
+    "mainContent": "Main content",
+    "order": "Order",
+    "sortBy": "Sort by"
   },
   "filters": {
     "sector": "Sector",
@@ -407,7 +433,8 @@
     "investmentHigh": "High investment",
     "allExchanges": "All exchanges",
     "ascending": "Ascending",
-    "descending": "Descending"
+    "descending": "Descending",
+    "sort": "Sort"
   },
   "sectors": {
     "finance": "Finance",
@@ -463,7 +490,7 @@
       "pctUp": "Up %",
       "pctDown": "Down %"
     },
-    "notifBrowser": "Navigateur",
+    "notifBrowser": "Browser",
     "notifEmail": "Email"
   },
   "technical": {
@@ -483,7 +510,7 @@
     "KE": "Kenya",
     "MA": "Morocco",
     "GH": "Ghana",
-    "CI": "Côte d'Ivoire",
+    "CI": "Ivory Coast",
     "SN": "Senegal",
     "TN": "Tunisia",
     "BW": "Botswana",
@@ -543,23 +570,23 @@
     "madeWith": "Made with",
     "forAfrica": "for Africa",
     "allRightsReserved": "All rights reserved",
-    "pricing": "Tarifs",
+    "pricing": "Pricing",
     "guides": "Guides",
-    "glossary": "Glossaire",
-    "community": "Communauté",
-    "careers": "Carrières",
-    "press": "Presse",
+    "glossary": "Glossary",
+    "community": "Community",
+    "careers": "Careers",
+    "press": "Press",
     "newsletter": "Newsletter",
-    "newsletterDesc": "Les marchés africains chaque semaine, sans bruit.",
-    "emailPlaceholder": "votre@email.com",
-    "subscribe": "S'abonner",
-    "copyright": "© {{year}} PENDO. Tous droits réservés.",
-    "conditions": "Conditions",
-    "confidentiality": "Confidentialité",
-    "legalNotice": "Mentions légales",
+    "newsletterDesc": "African markets every week, without the noise.",
+    "emailPlaceholder": "you@email.com",
+    "subscribe": "Subscribe",
+    "copyright": "© {{year}} PENDO. All rights reserved.",
+    "conditions": "Terms",
+    "confidentiality": "Privacy",
+    "legalNotice": "Legal notice",
     "pendoColumn": "PENDO",
-    "aboutUs": "À propos",
-    "learnTitle": "Apprendre"
+    "aboutUs": "About us",
+    "learnTitle": "Learn"
   },
   "about": {
     "title": "About us",
@@ -778,7 +805,8 @@
     "stopLoss": "Stop Loss",
     "takeProfit": "Take Profit",
     "entryPrice": "Entry price",
-    "capital": "Capital"
+    "capital": "Capital",
+    "newOrder": "New order"
   },
   "sorting": {
     "sortBy": "Sort by"
@@ -807,7 +835,9 @@
     "priceAlert": "Price Alert",
     "orderExecuted": "Order Executed",
     "newsAlert": "News Alert",
-    "systemNotification": "System Notification"
+    "systemNotification": "System Notification",
+    "loginTitle": "Notifications & alerts",
+    "loginDesc": "Sign in to get notifications about your markets and create custom price alerts."
   },
   "languageSelector": {
     "international": "International languages",
@@ -818,8 +848,9 @@
     "title": "Choose a language",
     "search": "Search...",
     "noResults": "No results",
-    "footer": "30 languages supported",
-    "count": "{{count}} langues"
+    "footer": "29 supported languages",
+    "count": "{{count}} languages",
+    "select": "Select language"
   },
   "exchange": {
     "africa": "Africa",
@@ -853,7 +884,8 @@
     "tradingHoursUTC": "Trading hours (UTC)",
     "legendActiveExchanges": "Legend of exchanges ({{count}} active):",
     "africanMarkets": "African Markets",
-    "quickChart": "Quick Chart"
+    "quickChart": "Quick Chart",
+    "realTime": "in real time"
   },
   "chart": {
     "priceEvolution": "Price evolution",
@@ -1026,7 +1058,7 @@
     "performanceHistory": "Performance History",
     "date": "Date",
     "gain": "Gain/Loss",
-    "at": "à"
+    "at": "at"
   },
   "validation": {
     "quantityPositive": "Quantity must be greater than 0",
@@ -1074,82 +1106,82 @@
     "all": "All",
     "searchPlaceholder": "Search...",
     "categories": {
-      "oscillators": "Oscillateurs",
-      "trend": "Tendance",
-      "averages": "Moyennes",
+      "oscillators": "Oscillators",
+      "trend": "Trend",
+      "averages": "Moving averages",
       "volume": "Volume",
-      "volatility": "Volatilité"
+      "volatility": "Volatility"
     },
     "desc": {
       "rsi": "Relative Strength Index",
       "macd": "Moving Average Convergence Divergence",
-      "bb": "Bandes de Bollinger",
-      "ema": "Moyenne Mobile Exponentielle",
-      "sma": "Moyenne Mobile Simple",
+      "bb": "Bollinger Bands",
+      "ema": "Exponential Moving Average",
+      "sma": "Simple Moving Average",
       "vwap": "Volume Weighted Average Price",
       "atr": "Average True Range",
       "adx": "Average Directional Index",
-      "stoch": "Oscillateur Stochastique",
-      "ichimoku": "Nuage Ichimoku",
+      "stoch": "Stochastic Oscillator",
+      "ichimoku": "Ichimoku Cloud",
       "obv": "On-Balance Volume",
       "mfi": "Money Flow Index"
     }
   },
   "dashboard": {
-    "title": "Dashboard PENDO",
+    "title": "PENDO Dashboard",
     "greeting": {
-      "night": "Bonne nuit",
-      "morning": "Bonjour",
-      "afternoon": "Bon après-midi",
-      "evening": "Bonsoir"
+      "night": "Good night",
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening"
     },
-    "refresh": "Actualiser",
-    "marketsOpen_one": "{{count}} marché ouvert",
-    "marketsOpen_other": "{{count}} marchés ouverts",
-    "portfolioValue": "Valeur du portefeuille",
+    "refresh": "Refresh",
+    "marketsOpen_one": "{{count}} market open",
+    "marketsOpen_other": "{{count}} markets open",
+    "portfolioValue": "Portfolio value",
     "positions_one": "{{count}} position",
     "positions_other": "{{count}} positions",
-    "totalGainLoss": "Gain / Perte total",
-    "activeAlerts": "Alertes actives",
-    "noAlert": "Aucune alerte",
-    "viewAlerts": "Voir les alertes",
-    "trackedMarkets": "Marchés suivis",
-    "allClosed": "Tous fermés",
-    "openCount": "{{count}} ouvert(s)",
-    "africanExchanges": "Bourses africaines",
-    "openMarkets": "Marchés ouverts",
-    "liveData": "Données en direct",
-    "exchangesCovered": "bourses couvertes",
-    "activeOpportunities": "Opportunités actives",
-    "myMarkets": "Mes marchés",
-    "africanMarkets": "Marchés africains",
-    "viewAll": "Voir tout",
-    "topMovers": "Top mouvements du jour",
-    "addWatchlistHint": "Ajoutez des actions à votre liste de suivi pour voir vos marchés ici.",
-    "activePriceAlerts": "Alertes de prix actives",
-    "manageAlerts": "Gérer les alertes",
-    "watchlist": "Liste de suivi",
-    "portfolioLink": "Portefeuille",
+    "totalGainLoss": "Total gain / loss",
+    "activeAlerts": "Active alerts",
+    "noAlert": "No alerts",
+    "viewAlerts": "View alerts",
+    "trackedMarkets": "Tracked markets",
+    "allClosed": "All closed",
+    "openCount": "{{count}} open",
+    "africanExchanges": "African exchanges",
+    "openMarkets": "Open markets",
+    "liveData": "Live data",
+    "exchangesCovered": "exchanges covered",
+    "activeOpportunities": "Active opportunities",
+    "myMarkets": "My markets",
+    "africanMarkets": "African markets",
+    "viewAll": "View all",
+    "topMovers": "Today's top movers",
+    "addWatchlistHint": "Add stocks to your watchlist to see your markets here.",
+    "activePriceAlerts": "Active price alerts",
+    "manageAlerts": "Manage alerts",
+    "watchlist": "Watchlist",
+    "portfolioLink": "Portfolio",
     "tableHeaders": {
       "ticker": "Ticker",
-      "name": "Nom",
-      "price": "Prix",
-      "change": "Variation",
-      "target": "Cible",
+      "name": "Name",
+      "price": "Price",
+      "change": "Change",
+      "target": "Target",
       "distance": "Distance"
     },
-    "latestNews": "Dernières actualités",
-    "allNews": "Toutes les news",
-    "noNewsAvailable": "Aucune actualité disponible",
-    "investmentOpportunities": "Opportunités d'investissement",
-    "noOpportunitiesAvailable": "Aucune opportunité disponible",
-    "personalizedDashboard": "Dashboard personnalisé",
-    "loginCTADesc": "Connectez-vous pour voir votre portefeuille, vos alertes de prix et vos marchés favoris en un coup d'œil.",
-    "signIn": "Se connecter",
-    "justNow": "à l'instant",
-    "minutesAgo": "il y a {{count}} min",
-    "hoursAgo": "il y a {{count}} h",
-    "daysAgo": "il y a {{count}} j",
+    "latestNews": "Latest news",
+    "allNews": "All news",
+    "noNewsAvailable": "No news available",
+    "investmentOpportunities": "Investment opportunities",
+    "noOpportunitiesAvailable": "No opportunities available",
+    "personalizedDashboard": "Personalized dashboard",
+    "loginCTADesc": "Sign in to see your portfolio, price alerts and favorite markets at a glance.",
+    "signIn": "Sign in",
+    "justNow": "just now",
+    "minutesAgo": "{{count}} min ago",
+    "hoursAgo": "{{count}} h ago",
+    "daysAgo": "{{count}} d ago",
     "marketAlerts": "Market alerts",
     "noAnomalies": "No unusual movement detected",
     "anomalyBadge": "Unusual",
@@ -1158,92 +1190,113 @@
     "relevanceScoreTooltip": "Computed relevance score (return, risk, freshness, verification, traction)"
   },
   "calendar": {
-    "title": "Calendrier Économique Africain",
-    "subtitle": "Décisions de taux, PIB, inflation, PMI — {{count}} indicateurs suivis",
-    "viewList": "Liste",
-    "viewCalendar": "Calendrier",
-    "next7Days": "Prochains 7 jours",
-    "allCountries": "Tous les pays",
-    "today": "Aujourd'hui",
-    "noEvents": "Aucun événement ce mois-ci",
-    "noEventsHint": "Changez les filtres ou naviguez vers un autre mois",
-    "todayBadge": "AUJOURD'HUI",
-    "moreEvents": "+{{count}} autres",
-    "statsEvents_one": "{{count}} événement en {{month}}",
-    "statsEvents_other": "{{count}} événements en {{month}}",
-    "statsHighImpact": "{{count}} fort impact",
-    "statsCountries_one": "{{count}} pays",
-    "statsCountries_other": "{{count}} pays",
+    "title": "African Economic Calendar",
+    "subtitle": "Rate decisions, GDP, inflation, PMI — {{count}} indicators tracked",
+    "viewList": "List",
+    "viewCalendar": "Calendar",
+    "next7Days": "Next 7 days",
+    "allCountries": "All countries",
+    "today": "Today",
+    "noEvents": "No events this month",
+    "noEventsHint": "Change the filters or go to another month",
+    "todayBadge": "TODAY",
+    "moreEvents": "+{{count}} more",
+    "statsEvents_one": "{{count}} event in {{month}}",
+    "statsEvents_other": "{{count}} events in {{month}}",
+    "statsHighImpact": "{{count}} high impact",
+    "statsCountries_one": "{{count}} country",
+    "statsCountries_other": "{{count}} countries",
     "categories": {
-      "all": "Tous",
-      "rates": "Taux",
+      "all": "All",
+      "rates": "Rates",
       "inflation": "Inflation",
-      "gdp": "PIB",
+      "gdp": "GDP",
       "pmi": "PMI",
-      "trade": "Commerce"
+      "trade": "Trade"
     },
     "impact": {
-      "all": "Tous",
-      "high": "Fort",
-      "medium": "Moyen",
-      "low": "Faible"
+      "all": "All",
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
     },
-    "days": "Lun,Mar,Mer,Jeu,Ven,Sam,Dim",
-    "months": "Janvier,Février,Mars,Avril,Mai,Juin,Juillet,Août,Septembre,Octobre,Novembre,Décembre",
+    "days": [
+      "Mon",
+      "Tue",
+      "Wed",
+      "Thu",
+      "Fri",
+      "Sat",
+      "Sun"
+    ],
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
     "eventNames": {
-      "za_rate_q1": "Décision taux SARB",
-      "za_cpi": "IPC (Inflation)",
-      "za_gdp": "PIB Trimestriel",
-      "za_pmi": "PMI Manufacturier",
-      "za_trade": "Balance commerciale",
-      "ng_rate": "Décision taux CBN",
-      "ng_cpi": "IPC (Inflation)",
-      "ng_gdp": "PIB Trimestriel",
+      "za_rate_q1": "SARB rate decision",
+      "za_cpi": "CPI (Inflation)",
+      "za_gdp": "Quarterly GDP",
+      "za_pmi": "Manufacturing PMI",
+      "za_trade": "Trade balance",
+      "ng_rate": "CBN rate decision",
+      "ng_cpi": "CPI (Inflation)",
+      "ng_gdp": "Quarterly GDP",
       "ng_pmi": "PMI Stanbic IBTC",
-      "eg_rate": "Décision taux CBE",
-      "eg_cpi": "IPC (Inflation)",
-      "eg_gdp": "PIB Trimestriel",
+      "eg_rate": "CBE rate decision",
+      "eg_cpi": "CPI (Inflation)",
+      "eg_gdp": "Quarterly GDP",
       "eg_pmi": "PMI S&P Global",
-      "ma_rate": "Décision taux BAM",
-      "ma_cpi": "IPC (Inflation)",
-      "ma_gdp": "PIB Trimestriel",
-      "ke_rate": "Décision taux CBK",
-      "ke_cpi": "IPC (Inflation)",
-      "ke_gdp": "PIB Trimestriel",
+      "ma_rate": "BAM rate decision",
+      "ma_cpi": "CPI (Inflation)",
+      "ma_gdp": "Quarterly GDP",
+      "ke_rate": "CBK rate decision",
+      "ke_cpi": "CPI (Inflation)",
+      "ke_gdp": "Quarterly GDP",
       "ke_pmi": "PMI Stanbic",
-      "tn_rate": "Décision taux BCT",
-      "tn_cpi": "IPC (Inflation)",
-      "gh_rate": "Décision taux BoG",
-      "gh_cpi": "IPC (Inflation)",
-      "xof_rate": "Décision taux BCEAO",
-      "xaf_rate": "Décision taux BEAC",
-      "mu_rate": "Décision taux BoM",
-      "bw_rate": "Décision taux BoB"
+      "tn_rate": "BCT rate decision",
+      "tn_cpi": "CPI (Inflation)",
+      "gh_rate": "BoG rate decision",
+      "gh_cpi": "CPI (Inflation)",
+      "xof_rate": "BCEAO rate decision",
+      "xaf_rate": "BEAC rate decision",
+      "mu_rate": "BoM rate decision",
+      "bw_rate": "BoB rate decision"
     },
     "countryNames": {
-      "ZA": "Afrique du Sud",
+      "ZA": "South Africa",
       "NG": "Nigeria",
-      "EG": "Égypte",
-      "MA": "Maroc",
+      "EG": "Egypt",
+      "MA": "Morocco",
       "KE": "Kenya",
-      "TN": "Tunisie",
+      "TN": "Tunisia",
       "GH": "Ghana",
-      "XOF": "UEMOA",
+      "XOF": "WAEMU",
       "XAF": "CEMAC",
-      "MU": "Maurice",
+      "MU": "Mauritius",
       "BW": "Botswana"
     }
   },
   "trading": {
-    "indicators": "Indicateurs",
-    "alert": "Alerte",
-    "open": "Ouvert",
-    "closed": "Fermé",
+    "indicators": "Indicators",
+    "alert": "Alert",
+    "open": "Open",
+    "closed": "Closed",
     "chartTypes": {
-      "candles": "Bougies",
-      "bars": "Barres",
-      "line": "Ligne",
-      "area": "Zone",
+      "candles": "Candles",
+      "bars": "Bars",
+      "line": "Line",
+      "area": "Area",
       "heikinAshi": "Heikin Ashi"
     },
     "timeframes": {
@@ -1252,9 +1305,14 @@
       "15m": "15m",
       "1h": "1h",
       "4h": "4h",
-      "1d": "1J",
-      "1w": "1S",
+      "1d": "1D",
+      "1w": "1W",
       "1M": "1M"
     }
+  },
+  "errors": {
+    "title": "Something went wrong",
+    "description": "An unexpected error occurred. Please reload the page.",
+    "reload": "Reload page"
   }
 }
